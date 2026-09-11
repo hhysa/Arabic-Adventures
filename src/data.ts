@@ -1,759 +1,645 @@
-export const groups = [
+export type VocabularyWord = {
+  id: string;
+  arabic: string;
+  english: string;
+  say: string;
+  emoji: string;
+};
+export type LetterGroup = {
+  letter: string;
+  name: string;
+  // Isolated, beginning, middle, ending. Keep this order for the lesson board.
+  forms: [string, string, string, string];
+  color: string;
+  words: VocabularyWord[];
+};
+export type Lesson = VocabularyWord & { group: number };
+
+export const groups: LetterGroup[] = [
   {
-    "letter": "أ",
-    "name": "Alif",
-    "forms": [
-      "أ",
-      "أ",
-      "ـأ",
-      "ـأ"
+    letter: 'أ',
+    name: 'Alif',
+    forms: ['أ', 'أ', 'ـأ', 'ـأ'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'lion',
+        arabic: 'أَسَد',
+        english: 'Lion',
+        say: 'asad',
+        emoji: '🦁',
+      },
+      {
+        id: 'rabbit',
+        arabic: 'أَرْنَب',
+        english: 'Rabbit',
+        say: 'arnab',
+        emoji: '🐇',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "lion",
-        "أَسَد",
-        "Lion",
-        "asad",
-        "🦁"
-      ],
-      [
-        "rabbit",
-        "أَرْنَب",
-        "Rabbit",
-        "arnab",
-        "🐇"
-      ]
-    ]
   },
   {
-    "letter": "ب",
-    "name": "Baa",
-    "forms": [
-      "ب",
-      "بـ",
-      "ـبـ",
-      "ـب"
+    letter: 'ب',
+    name: 'Baa',
+    forms: ['ب', 'بـ', 'ـبـ', 'ـب'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'duck',
+        arabic: 'بَطَّة',
+        english: 'Duck',
+        say: 'battah',
+        emoji: '🦆',
+      },
+      {
+        id: 'door',
+        arabic: 'بَاب',
+        english: 'Door',
+        say: 'baab',
+        emoji: '🚪',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "duck",
-        "بَطَّة",
-        "Duck",
-        "battah",
-        "🦆"
-      ],
-      [
-        "door",
-        "بَاب",
-        "Door",
-        "baab",
-        "🚪"
-      ]
-    ]
   },
   {
-    "letter": "ت",
-    "name": "Taa",
-    "forms": [
-      "ت",
-      "تـ",
-      "ـتـ",
-      "ـت"
+    letter: 'ت',
+    name: 'Taa',
+    forms: ['ت', 'تـ', 'ـتـ', 'ـت'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'apple',
+        arabic: 'تُفَّاحَة',
+        english: 'Apple',
+        say: 'tuffaahah',
+        emoji: '🍎',
+      },
+      {
+        id: 'dates',
+        arabic: 'تَمْر',
+        english: 'Dates',
+        say: 'tamr',
+        emoji: '🌴',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "apple",
-        "تُفَّاحَة",
-        "Apple",
-        "tuffaahah",
-        "🍎"
-      ],
-      [
-        "dates",
-        "تَمْر",
-        "Dates",
-        "tamr",
-        "🌴"
-      ]
-    ]
   },
   {
-    "letter": "ث",
-    "name": "Thaa",
-    "forms": [
-      "ث",
-      "ثـ",
-      "ـثـ",
-      "ـث"
+    letter: 'ث',
+    name: 'Thaa',
+    forms: ['ث', 'ثـ', 'ـثـ', 'ـث'],
+    color: '#AADDDD',
+    words: [
+      {
+        id: 'fox',
+        arabic: 'ثَعْلَب',
+        english: 'Fox',
+        say: 'tha‘lab',
+        emoji: '🦊',
+      },
+      {
+        id: 'robe',
+        arabic: 'ثَوْب',
+        english: 'Robe',
+        say: 'thawb',
+        emoji: '🥼',
+      },
     ],
-    "color": "#AADDDD",
-    "words": [
-      [
-        "fox",
-        "ثَعْلَب",
-        "Fox",
-        "tha‘lab",
-        "🦊"
-      ],
-      [
-        "robe",
-        "ثَوْب",
-        "Robe",
-        "thawb",
-        "🥼"
-      ]
-    ]
   },
   {
-    "letter": "ج",
-    "name": "Jeem",
-    "forms": [
-      "ج",
-      "جـ",
-      "ـجـ",
-      "ـج"
+    letter: 'ج',
+    name: 'Jeem',
+    forms: ['ج', 'جـ', 'ـجـ', 'ـج'],
+    color: '#CBBBEA',
+    words: [
+      {
+        id: 'camel',
+        arabic: 'جَمَل',
+        english: 'Camel',
+        say: 'jamal',
+        emoji: '🐪',
+      },
+      {
+        id: 'cheese',
+        arabic: 'جُبْن',
+        english: 'Cheese',
+        say: 'jubn',
+        emoji: '🧀',
+      },
     ],
-    "color": "#CBBBEA",
-    "words": [
-      [
-        "camel",
-        "جَمَل",
-        "Camel",
-        "jamal",
-        "🐪"
-      ],
-      [
-        "cheese",
-        "جُبْن",
-        "Cheese",
-        "jubn",
-        "🧀"
-      ]
-    ]
   },
   {
-    "letter": "ح",
-    "name": "Haa",
-    "forms": [
-      "ح",
-      "حـ",
-      "ـحـ",
-      "ـح"
+    letter: 'ح',
+    name: 'Haa',
+    forms: ['ح', 'حـ', 'ـحـ', 'ـح'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'horse',
+        arabic: 'حِصَان',
+        english: 'Horse',
+        say: 'hisaan',
+        emoji: '🐎',
+      },
+      {
+        id: 'whale',
+        arabic: 'حُوت',
+        english: 'Whale',
+        say: 'hoot',
+        emoji: '🐋',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "horse",
-        "حِصَان",
-        "Horse",
-        "hisaan",
-        "🐎"
-      ],
-      [
-        "whale",
-        "حُوت",
-        "Whale",
-        "hoot",
-        "🐋"
-      ]
-    ]
   },
   {
-    "letter": "خ",
-    "name": "Khaa",
-    "forms": [
-      "خ",
-      "خـ",
-      "ـخـ",
-      "ـخ"
+    letter: 'خ',
+    name: 'Khaa',
+    forms: ['خ', 'خـ', 'ـخـ', 'ـخ'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'bread',
+        arabic: 'خُبْز',
+        english: 'Bread',
+        say: 'khubz',
+        emoji: '🍞',
+      },
+      {
+        id: 'sheep',
+        arabic: 'خَرُوف',
+        english: 'Sheep',
+        say: 'kharoof',
+        emoji: '🐑',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "bread",
-        "خُبْز",
-        "Bread",
-        "khubz",
-        "🍞"
-      ],
-      [
-        "sheep",
-        "خَرُوف",
-        "Sheep",
-        "kharoof",
-        "🐑"
-      ]
-    ]
   },
   {
-    "letter": "د",
-    "name": "Daal",
-    "forms": [
-      "د",
-      "د",
-      "ـد",
-      "ـد"
+    letter: 'د',
+    name: 'Daal',
+    forms: ['د', 'د', 'ـد', 'ـد'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'bear',
+        arabic: 'دُبّ',
+        english: 'Bear',
+        say: 'dubb',
+        emoji: '🐻',
+      },
+      {
+        id: 'chicken',
+        arabic: 'دَجَاجَة',
+        english: 'Chicken',
+        say: 'dajaajah',
+        emoji: '🐔',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "bear",
-        "دُبّ",
-        "Bear",
-        "dubb",
-        "🐻"
-      ],
-      [
-        "chicken",
-        "دَجَاجَة",
-        "Chicken",
-        "dajaajah",
-        "🐔"
-      ]
-    ]
   },
   {
-    "letter": "ذ",
-    "name": "Dhaal",
-    "forms": [
-      "ذ",
-      "ذ",
-      "ـذ",
-      "ـذ"
+    letter: 'ذ',
+    name: 'Dhaal',
+    forms: ['ذ', 'ذ', 'ـذ', 'ـذ'],
+    color: '#AADDDD',
+    words: [
+      {
+        id: 'corn',
+        arabic: 'ذُرَة',
+        english: 'Corn',
+        say: 'dhurah',
+        emoji: '🌽',
+      },
+      {
+        id: 'wolf',
+        arabic: 'ذِئْب',
+        english: 'Wolf',
+        say: 'dhi’b',
+        emoji: '🐺',
+      },
     ],
-    "color": "#AADDDD",
-    "words": [
-      [
-        "corn",
-        "ذُرَة",
-        "Corn",
-        "dhurah",
-        "🌽"
-      ],
-      [
-        "wolf",
-        "ذِئْب",
-        "Wolf",
-        "dhi’b",
-        "🐺"
-      ]
-    ]
   },
   {
-    "letter": "ر",
-    "name": "Raa",
-    "forms": [
-      "ر",
-      "ر",
-      "ـر",
-      "ـر"
+    letter: 'ر',
+    name: 'Raa',
+    forms: ['ر', 'ر', 'ـر', 'ـر'],
+    color: '#CBBBEA',
+    words: [
+      {
+        id: 'robot',
+        arabic: 'رُوبُوت',
+        english: 'Robot',
+        say: 'rooboot',
+        emoji: '🤖',
+      },
+      {
+        id: 'feather',
+        arabic: 'رِيشَة',
+        english: 'Feather',
+        say: 'reeshah',
+        emoji: '🪶',
+      },
     ],
-    "color": "#CBBBEA",
-    "words": [
-      [
-        "robot",
-        "رُوبُوت",
-        "Robot",
-        "rooboot",
-        "🤖"
-      ],
-      [
-        "feather",
-        "رِيشَة",
-        "Feather",
-        "reeshah",
-        "🪶"
-      ]
-    ]
   },
   {
-    "letter": "ز",
-    "name": "Zaay",
-    "forms": [
-      "ز",
-      "ز",
-      "ـز",
-      "ـز"
+    letter: 'ز',
+    name: 'Zaay',
+    forms: ['ز', 'ز', 'ـز', 'ـز'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'flower',
+        arabic: 'زَهْرَة',
+        english: 'Flower',
+        say: 'zahrah',
+        emoji: '🌸',
+      },
+      {
+        id: 'giraffe',
+        arabic: 'زَرَافَة',
+        english: 'Giraffe',
+        say: 'zaraafah',
+        emoji: '🦒',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "flower",
-        "زَهْرَة",
-        "Flower",
-        "zahrah",
-        "🌸"
-      ],
-      [
-        "giraffe",
-        "زَرَافَة",
-        "Giraffe",
-        "zaraafah",
-        "🦒"
-      ]
-    ]
   },
   {
-    "letter": "س",
-    "name": "Seen",
-    "forms": [
-      "س",
-      "سـ",
-      "ـسـ",
-      "ـس"
+    letter: 'س',
+    name: 'Seen',
+    forms: ['س', 'سـ', 'ـسـ', 'ـس'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'fish',
+        arabic: 'سَمَكَة',
+        english: 'Fish',
+        say: 'samakah',
+        emoji: '🐟',
+      },
+      {
+        id: 'car',
+        arabic: 'سَيَّارَة',
+        english: 'Car',
+        say: 'sayyaarah',
+        emoji: '🚗',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "fish",
-        "سَمَكَة",
-        "Fish",
-        "samakah",
-        "🐟"
-      ],
-      [
-        "car",
-        "سَيَّارَة",
-        "Car",
-        "sayyaarah",
-        "🚗"
-      ]
-    ]
   },
   {
-    "letter": "ش",
-    "name": "Sheen",
-    "forms": [
-      "ش",
-      "شـ",
-      "ـشـ",
-      "ـش"
+    letter: 'ش',
+    name: 'Sheen',
+    forms: ['ش', 'شـ', 'ـشـ', 'ـش'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'sun',
+        arabic: 'شَمْس',
+        english: 'Sun',
+        say: 'shams',
+        emoji: '☀️',
+      },
+      {
+        id: 'tree',
+        arabic: 'شَجَرَة',
+        english: 'Tree',
+        say: 'shajarah',
+        emoji: '🌳',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "sun",
-        "شَمْس",
-        "Sun",
-        "shams",
-        "☀️"
-      ],
-      [
-        "tree",
-        "شَجَرَة",
-        "Tree",
-        "shajarah",
-        "🌳"
-      ]
-    ]
   },
   {
-    "letter": "ص",
-    "name": "Saad",
-    "forms": [
-      "ص",
-      "صـ",
-      "ـصـ",
-      "ـص"
+    letter: 'ص',
+    name: 'Saad',
+    forms: ['ص', 'صـ', 'ـصـ', 'ـص'],
+    color: '#AADDDD',
+    words: [
+      {
+        id: 'falcon',
+        arabic: 'صَقْر',
+        english: 'Falcon',
+        say: 'saqr',
+        emoji: '🦅',
+      },
+      {
+        id: 'soap',
+        arabic: 'صَابُون',
+        english: 'Soap',
+        say: 'saaboon',
+        emoji: '🧼',
+      },
     ],
-    "color": "#AADDDD",
-    "words": [
-      [
-        "falcon",
-        "صَقْر",
-        "Falcon",
-        "saqr",
-        "🦅"
-      ],
-      [
-        "soap",
-        "صَابُون",
-        "Soap",
-        "saaboon",
-        "🧼"
-      ]
-    ]
   },
   {
-    "letter": "ض",
-    "name": "Daad",
-    "forms": [
-      "ض",
-      "ضـ",
-      "ـضـ",
-      "ـض"
+    letter: 'ض',
+    name: 'Daad',
+    forms: ['ض', 'ضـ', 'ـضـ', 'ـض'],
+    color: '#CBBBEA',
+    words: [
+      {
+        id: 'frog',
+        arabic: 'ضِفْدَع',
+        english: 'Frog',
+        say: 'difda‘',
+        emoji: '🐸',
+      },
+      {
+        id: 'molar',
+        arabic: 'ضِرْس',
+        english: 'Molar',
+        say: 'dirs',
+        emoji: '🦷',
+      },
     ],
-    "color": "#CBBBEA",
-    "words": [
-      [
-        "frog",
-        "ضِفْدَع",
-        "Frog",
-        "difda‘",
-        "🐸"
-      ],
-      [
-        "molar",
-        "ضِرْس",
-        "Molar",
-        "dirs",
-        "🦷"
-      ]
-    ]
   },
   {
-    "letter": "ط",
-    "name": "Taa emphatic",
-    "forms": [
-      "ط",
-      "طـ",
-      "ـطـ",
-      "ـط"
+    letter: 'ط',
+    name: 'Taa emphatic',
+    forms: ['ط', 'طـ', 'ـطـ', 'ـط'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'airplane',
+        arabic: 'طَائِرَة',
+        english: 'Airplane',
+        say: 'taa’irah',
+        emoji: '✈️',
+      },
+      {
+        id: 'drum',
+        arabic: 'طَبْل',
+        english: 'Drum',
+        say: 'tabl',
+        emoji: '🥁',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "airplane",
-        "طَائِرَة",
-        "Airplane",
-        "taa’irah",
-        "✈️"
-      ],
-      [
-        "drum",
-        "طَبْل",
-        "Drum",
-        "tabl",
-        "🥁"
-      ]
-    ]
   },
   {
-    "letter": "ظ",
-    "name": "Dhaa emphatic",
-    "forms": [
-      "ظ",
-      "ظـ",
-      "ـظـ",
-      "ـظ"
+    letter: 'ظ',
+    name: 'Dhaa emphatic',
+    forms: ['ظ', 'ظـ', 'ـظـ', 'ـظ'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'envelope',
+        arabic: 'ظَرْف',
+        english: 'Envelope',
+        say: 'zarf',
+        emoji: '✉️',
+      },
+      {
+        id: 'fingernail',
+        arabic: 'ظُفْر',
+        english: 'Fingernail',
+        say: 'zufr',
+        emoji: '💅',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "envelope",
-        "ظَرْف",
-        "Envelope",
-        "zarf",
-        "✉️"
-      ],
-      [
-        "fingernail",
-        "ظُفْر",
-        "Fingernail",
-        "zufr",
-        "💅"
-      ]
-    ]
   },
   {
-    "letter": "ع",
-    "name": "Ayn",
-    "forms": [
-      "ع",
-      "عـ",
-      "ـعـ",
-      "ـع"
+    letter: 'ع',
+    name: 'Ayn',
+    forms: ['ع', 'عـ', 'ـعـ', 'ـع'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'eye',
+        arabic: 'عَيْن',
+        english: 'Eye',
+        say: '‘ayn',
+        emoji: '👁️',
+      },
+      {
+        id: 'grapes',
+        arabic: 'عِنَب',
+        english: 'Grapes',
+        say: '‘inab',
+        emoji: '🍇',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "eye",
-        "عَيْن",
-        "Eye",
-        "‘ayn",
-        "👁️"
-      ],
-      [
-        "grapes",
-        "عِنَب",
-        "Grapes",
-        "‘inab",
-        "🍇"
-      ]
-    ]
   },
   {
-    "letter": "غ",
-    "name": "Ghayn",
-    "forms": [
-      "غ",
-      "غـ",
-      "ـغـ",
-      "ـغ"
+    letter: 'غ',
+    name: 'Ghayn',
+    forms: ['غ', 'غـ', 'ـغـ', 'ـغ'],
+    color: '#AADDDD',
+    words: [
+      {
+        id: 'gazelle',
+        arabic: 'غَزَال',
+        english: 'Gazelle',
+        say: 'ghazaal',
+        emoji: '🦌',
+      },
+      {
+        id: 'cloud',
+        arabic: 'غَيْمَة',
+        english: 'Cloud',
+        say: 'ghaymah',
+        emoji: '☁️',
+      },
     ],
-    "color": "#AADDDD",
-    "words": [
-      [
-        "gazelle",
-        "غَزَال",
-        "Gazelle",
-        "ghazaal",
-        "🦌"
-      ],
-      [
-        "cloud",
-        "غَيْمَة",
-        "Cloud",
-        "ghaymah",
-        "☁️"
-      ]
-    ]
   },
   {
-    "letter": "ف",
-    "name": "Faa",
-    "forms": [
-      "ف",
-      "فـ",
-      "ـفـ",
-      "ـف"
+    letter: 'ف',
+    name: 'Faa',
+    forms: ['ف', 'فـ', 'ـفـ', 'ـف'],
+    color: '#CBBBEA',
+    words: [
+      {
+        id: 'elephant',
+        arabic: 'فِيل',
+        english: 'Elephant',
+        say: 'feel',
+        emoji: '🐘',
+      },
+      {
+        id: 'strawberry',
+        arabic: 'فَرَاوِلَة',
+        english: 'Strawberry',
+        say: 'faraawilah',
+        emoji: '🍓',
+      },
     ],
-    "color": "#CBBBEA",
-    "words": [
-      [
-        "elephant",
-        "فِيل",
-        "Elephant",
-        "feel",
-        "🐘"
-      ],
-      [
-        "strawberry",
-        "فَرَاوِلَة",
-        "Strawberry",
-        "faraawilah",
-        "🍓"
-      ]
-    ]
   },
   {
-    "letter": "ق",
-    "name": "Qaaf",
-    "forms": [
-      "ق",
-      "قـ",
-      "ـقـ",
-      "ـق"
+    letter: 'ق',
+    name: 'Qaaf',
+    forms: ['ق', 'قـ', 'ـقـ', 'ـق'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'moon',
+        arabic: 'قَمَر',
+        english: 'Moon',
+        say: 'qamar',
+        emoji: '🌙',
+      },
+      {
+        id: 'pencil',
+        arabic: 'قَلَم',
+        english: 'Pencil',
+        say: 'qalam',
+        emoji: '✏️',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "moon",
-        "قَمَر",
-        "Moon",
-        "qamar",
-        "🌙"
-      ],
-      [
-        "pencil",
-        "قَلَم",
-        "Pencil",
-        "qalam",
-        "✏️"
-      ]
-    ]
   },
   {
-    "letter": "ك",
-    "name": "Kaaf",
-    "forms": [
-      "ك",
-      "كـ",
-      "ـكـ",
-      "ـك"
+    letter: 'ك',
+    name: 'Kaaf',
+    forms: ['ك', 'كـ', 'ـكـ', 'ـك'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'dog',
+        arabic: 'كَلْب',
+        english: 'Dog',
+        say: 'kalb',
+        emoji: '🐕',
+      },
+      {
+        id: 'book',
+        arabic: 'كِتَاب',
+        english: 'Book',
+        say: 'kitaab',
+        emoji: '📖',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "dog",
-        "كَلْب",
-        "Dog",
-        "kalb",
-        "🐕"
-      ],
-      [
-        "book",
-        "كِتَاب",
-        "Book",
-        "kitaab",
-        "📖"
-      ]
-    ]
   },
   {
-    "letter": "ل",
-    "name": "Laam",
-    "forms": [
-      "ل",
-      "لـ",
-      "ـلـ",
-      "ـل"
+    letter: 'ل',
+    name: 'Laam',
+    forms: ['ل', 'لـ', 'ـلـ', 'ـل'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'lemon',
+        arabic: 'لَيْمُون',
+        english: 'Lemon',
+        say: 'laymoon',
+        emoji: '🍋',
+      },
+      {
+        id: 'tongue',
+        arabic: 'لِسَان',
+        english: 'Tongue',
+        say: 'lisaan',
+        emoji: '👅',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "lemon",
-        "لَيْمُون",
-        "Lemon",
-        "laymoon",
-        "🍋"
-      ],
-      [
-        "tongue",
-        "لِسَان",
-        "Tongue",
-        "lisaan",
-        "👅"
-      ]
-    ]
   },
   {
-    "letter": "م",
-    "name": "Meem",
-    "forms": [
-      "م",
-      "مـ",
-      "ـمـ",
-      "ـم"
+    letter: 'م',
+    name: 'Meem',
+    forms: ['م', 'مـ', 'ـمـ', 'ـم'],
+    color: '#AADDDD',
+    words: [
+      {
+        id: 'banana',
+        arabic: 'مَوْز',
+        english: 'Banana',
+        say: 'mawz',
+        emoji: '🍌',
+      },
+      {
+        id: 'key',
+        arabic: 'مِفْتَاح',
+        english: 'Key',
+        say: 'miftaah',
+        emoji: '🔑',
+      },
     ],
-    "color": "#AADDDD",
-    "words": [
-      [
-        "banana",
-        "مَوْز",
-        "Banana",
-        "mawz",
-        "🍌"
-      ],
-      [
-        "key",
-        "مِفْتَاح",
-        "Key",
-        "miftaah",
-        "🔑"
-      ]
-    ]
   },
   {
-    "letter": "ن",
-    "name": "Noon",
-    "forms": [
-      "ن",
-      "نـ",
-      "ـنـ",
-      "ـن"
+    letter: 'ن',
+    name: 'Noon',
+    forms: ['ن', 'نـ', 'ـنـ', 'ـن'],
+    color: '#CBBBEA',
+    words: [
+      {
+        id: 'star',
+        arabic: 'نَجْم',
+        english: 'Star',
+        say: 'najm',
+        emoji: '⭐',
+      },
+      {
+        id: 'bee',
+        arabic: 'نَحْلَة',
+        english: 'Bee',
+        say: 'nahlah',
+        emoji: '🐝',
+      },
     ],
-    "color": "#CBBBEA",
-    "words": [
-      [
-        "star",
-        "نَجْم",
-        "Star",
-        "najm",
-        "⭐"
-      ],
-      [
-        "bee",
-        "نَحْلَة",
-        "Bee",
-        "nahlah",
-        "🐝"
-      ]
-    ]
   },
   {
-    "letter": "ه",
-    "name": "Haa (هـ)",
-    "forms": [
-      "ه",
-      "هـ",
-      "ـهـ",
-      "ـه"
+    letter: 'ه',
+    name: 'Haa (هـ)',
+    forms: ['ه', 'هـ', 'ـهـ', 'ـه'],
+    color: '#F9D76D',
+    words: [
+      {
+        id: 'crescent',
+        arabic: 'هِلَال',
+        english: 'Crescent',
+        say: 'hilaal',
+        emoji: '🌙',
+      },
+      {
+        id: 'gift',
+        arabic: 'هَدِيَّة',
+        english: 'Gift',
+        say: 'hadiyyah',
+        emoji: '🎁',
+      },
     ],
-    "color": "#F9D76D",
-    "words": [
-      [
-        "crescent",
-        "هِلَال",
-        "Crescent",
-        "hilaal",
-        "🌙"
-      ],
-      [
-        "gift",
-        "هَدِيَّة",
-        "Gift",
-        "hadiyyah",
-        "🎁"
-      ]
-    ]
   },
   {
-    "letter": "و",
-    "name": "Waaw",
-    "forms": [
-      "و",
-      "و",
-      "ـو",
-      "ـو"
+    letter: 'و',
+    name: 'Waaw',
+    forms: ['و', 'و', 'ـو', 'ـو'],
+    color: '#BBDD87',
+    words: [
+      {
+        id: 'rose',
+        arabic: 'وَرْدَة',
+        english: 'Rose',
+        say: 'wardah',
+        emoji: '🌹',
+      },
+      {
+        id: 'face',
+        arabic: 'وَجْه',
+        english: 'Face',
+        say: 'wajh',
+        emoji: '🙂',
+      },
     ],
-    "color": "#BBDD87",
-    "words": [
-      [
-        "rose",
-        "وَرْدَة",
-        "Rose",
-        "wardah",
-        "🌹"
-      ],
-      [
-        "face",
-        "وَجْه",
-        "Face",
-        "wajh",
-        "🙂"
-      ]
-    ]
   },
   {
-    "letter": "ي",
-    "name": "Yaa",
-    "forms": [
-      "ي",
-      "يـ",
-      "ـيـ",
-      "ـي"
+    letter: 'ي',
+    name: 'Yaa',
+    forms: ['ي', 'يـ', 'ـيـ', 'ـي'],
+    color: '#F7B19C',
+    words: [
+      {
+        id: 'hand',
+        arabic: 'يَد',
+        english: 'Hand',
+        say: 'yad',
+        emoji: '✋',
+      },
+      {
+        id: 'dove',
+        arabic: 'يَمَامَة',
+        english: 'Dove',
+        say: 'yamaamah',
+        emoji: '🕊️',
+      },
     ],
-    "color": "#F7B19C",
-    "words": [
-      [
-        "hand",
-        "يَد",
-        "Hand",
-        "yad",
-        "✋"
-      ],
-      [
-        "dove",
-        "يَمَامَة",
-        "Dove",
-        "yamaamah",
-        "🕊️"
-      ]
-    ]
-  }
+  },
 ];
-export const lessons=groups.flatMap((g,group)=>g.words.map(([id,arabic,english,say,emoji])=>({id,arabic,english,say,emoji,group})));
+export const lessons: Lesson[] = groups.flatMap((g, group) =>
+  g.words.map((word) => ({ ...word, group })),
+);
+export const bonusOrange: VocabularyWord = {
+  id: 'orange',
+  arabic: 'بُرْتُقَال',
+  english: 'Orange',
+  say: 'burtuqaal',
+  emoji: '🍊',
+};
