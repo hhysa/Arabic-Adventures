@@ -43,6 +43,9 @@ export default function Lesson() {
     letterGroup.letter === 'ب'
       ? [lesson.id === 'door' ? lesson : groupWords[0], bonusOrange]
       : groupWords;
+  const levelDone = letterGroup.words.every((word) =>
+    progress.completed.includes(word.id),
+  );
   const boardWidth = Math.min(width - 20, 780);
   function play(wordId: string) {
     try {
@@ -72,10 +75,10 @@ export default function Lesson() {
         >
           <Pressable
             accessibilityRole="button"
-            onPress={() => router.push('/')}
+            onPress={() => router.push('/levels')}
             style={{ paddingVertical: 12 }}
           >
-            <Text style={s.back}>{t('← Your learning trail')}</Text>
+            <Text style={s.back}>{t('← Level map')}</Text>
           </Pressable>
           <LanguageSwitcher />
         </View>
@@ -139,6 +142,25 @@ export default function Lesson() {
               ? t('Your three stars are saved.')
               : t('Finish this lesson to collect three stars.')}
           </Text>
+          {levelDone && (
+            <View
+              style={[
+                s.card,
+                { alignItems: 'center', backgroundColor: '#FFF0BA' },
+              ]}
+            >
+              <Text style={{ fontSize: 44 }}>🏆</Text>
+              <Text style={s.section}>
+                {t('Level {number} complete!', { number: lesson.group + 1 })}
+              </Text>
+              <Text style={[s.sub, { textAlign: 'center' }]}>
+                {t('Both words discovered. Your next adventure is waiting.')}
+              </Text>
+              <Button onPress={() => router.push('/levels')}>
+                {t('Back to the level map →')}
+              </Button>
+            </View>
+          )}
           <Button
             disabled={!progress.ready}
             onPress={() => {

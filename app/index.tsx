@@ -1,309 +1,159 @@
-import { useLanguage } from '../src/language';
 import React from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  Image,
-  useWindowDimensions,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { Shell, Button, s, colors } from '../src/ui';
-import { groups, lessons } from '../src/data';
+import { useLanguage } from '../src/language';
 import { useProgress, streak } from '../src/progress';
+import { getLevels } from '../src/levels';
+
 export default function Home() {
-  const { t } = useLanguage();
-  const progress = useProgress(),
-    { width } = useWindowDimensions(),
-    next =
-      lessons.find((l) => !progress.completed.includes(l.id)) ?? lessons[0];
+  const { t } = useLanguage(),
+    progress = useProgress(),
+    levels = getLevels(progress.completed);
+  const current = levels.find((level) => !level.complete),
+    finished = levels.filter((level) => level.complete).length;
   return (
     <Shell>
-      <View style={[s.row, { justifyContent: 'space-between' }]}>
-        <View>
-          <Text style={s.eyebrow}>{t('LET’S EXPLORE TOGETHER')}</Text>
-          <Text style={[s.title, { marginTop: 10 }]}>
-            {t('A little Arabic, a big adventure.')}
+      <View style={styles.stage}>
+        <Text style={styles.kicker}>
+          {t('YOUR NEXT ADVENTURE STARTS HERE')}
+        </Text>
+        <View style={styles.emblem}>
+          <Text
+            style={{ fontSize: 25, position: 'absolute', left: 5, top: 12 }}
+          >
+            ✦
+          </Text>
+          <Text style={{ fontSize: 105, color: '#365C36' }}>
+            {current?.group.letter ?? '★'}
+          </Text>
+          <Text
+            style={{ fontSize: 28, position: 'absolute', right: 0, bottom: 10 }}
+          >
+            🌟
           </Text>
         </View>
-        <Text style={{ fontSize: 36 }}>☀️</Text>
+        <Text style={[s.title, { textAlign: 'center', fontSize: 40 }]}>
+          {t('Little explorer, big adventure!')}
+        </Text>
+        <Text
+          style={[
+            s.sub,
+            { textAlign: 'center', maxWidth: 450, color: '#526D43' },
+          ]}
+        >
+          {t('28 letter levels. Seven worlds. A whole alphabet to discover.')}
+        </Text>
+        <View style={{ width: '100%', maxWidth: 360, gap: 12, marginTop: 10 }}>
+          <Button
+            disabled={!progress.ready}
+            onPress={() =>
+              progress.completed.length && current
+                ? router.push(`/lesson/${current.nextWord.id}`)
+                : router.push('/levels')
+            }
+          >
+            {progress.completed.length && current
+              ? t('Continue adventure →')
+              : t('Let’s play! →')}
+          </Button>
+          <Button secondary onPress={() => router.push('/levels')}>
+            {t('Explore the level map')}
+          </Button>
+        </View>
+        <Text style={{ fontSize: 14, color: '#567346', fontWeight: '700' }}>
+          {current
+            ? t('Next stop: level {number} · {letter}', {
+                number: current.number,
+                letter: t(current.group.name),
+              })
+            : t('You discovered the whole alphabet!')}
+        </Text>
+      </View>
+      <View style={[s.row, { justifyContent: 'center' }]}>
+        {[
+          ['★', progress.stars, t('Stars collected')],
+          ['⚑', `${finished}/28`, t('Levels complete')],
+          ['🔥', streak(progress.days), t('Day streak')],
+        ].map(([icon, value, label]) => (
+          <View key={label} style={styles.stat}>
+            <Text style={{ fontSize: 24 }}>{icon}</Text>
+            <Text
+              style={{ fontSize: 26, fontWeight: '900', color: colors.ink }}
+            >
+              {value}
+            </Text>
+            <Text
+              style={{ fontSize: 12, color: colors.muted, textAlign: 'center' }}
+            >
+              {label}
+            </Text>
+          </View>
+        ))}
       </View>
       <View
         style={[
           s.card,
           {
-            backgroundColor: '#E8F1C7',
-            padding: width < 600 ? 24 : 38,
-            flexDirection: width < 700 ? 'column' : 'row',
-            overflow: 'hidden',
+            backgroundColor: '#FFF1CC',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
             alignItems: 'center',
-            gap: 30,
+            justifyContent: 'space-between',
           },
         ]}
       >
-        <View style={{ flex: 1, gap: 18 }}>
-          <View
-            style={{
-              alignSelf: 'flex-start',
-              backgroundColor: '#FFFFFF99',
-              borderRadius: 30,
-              paddingHorizontal: 14,
-              paddingVertical: 8,
-            }}
-          >
-            <Text
-              style={{ color: colors.green, fontWeight: '700', fontSize: 12 }}
-            >
-              {t('YOUR NEXT GREAT DISCOVERY')}
-            </Text>
-          </View>
-          <Text style={[s.title, { fontSize: width < 600 ? 35 : 45 }]}>
-            {t('Meet a letter.\nMake a new friend.')}
-          </Text>
-          <Text style={[s.sub, { maxWidth: 380, color: '#5A6F4D' }]}>
-            {t(
-              'Listen, play, and discover your first Arabic words. Your adventure starts with one little letter.',
-            )}
-          </Text>
-          <View style={{ alignSelf: 'flex-start' }}>
-            <Button onPress={() => router.push(`/lesson/${next.id}`)}>
-              {t('Start learning   →')}
-            </Button>
-          </View>
-          <Text style={{ fontSize: 12, color: '#637552' }}>
-            {t(
-              '{letters} letters  ·  {lessons} little lessons  ·  Endless curiosity',
-              { letters: groups.length, lessons: lessons.length },
-            )}
-          </Text>
+        <View style={{ gap: 6, flex: 1, minWidth: 190 }}>
+          <Text style={s.eyebrow}>{t('BONUS CHALLENGE')}</Text>
+          <Text style={s.section}>{t('Five questions. More stars!')}</Text>
+          <Text style={s.sub}>{t('Put your letter skills to the test.')}</Text>
         </View>
-        <View
-          style={{
-            width: width < 700 ? '100%' : 340,
-            height: 270,
-            borderRadius: 24,
-            overflow: 'hidden',
-            backgroundColor: '#ECF8B3',
-            transform: [{ rotate: '3deg' }],
-            borderWidth: 6,
-            borderColor: '#FFFFFF',
-          }}
-        >
-          <Image
-            source={require('../examples/letter baa example.jpeg')}
-            style={{ width: '100%', height: 475, marginTop: -5 }}
-            resizeMode="cover"
-          />
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 12,
-              left: 12,
-              right: 12,
-              backgroundColor: '#FFFFFFEE',
-              borderRadius: 14,
-              padding: 12,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: 'center',
-                color: colors.ink,
-                fontSize: 17,
-                fontWeight: '800',
-              }}
-            >
-              {t('ب  Baa is for بَطَّة · Duck')}
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={[s.row, { gap: 12 }]}>
-        {[
-          ['★', progress.stars, t('Stars collected'), '#FFF2CE'],
-          [
-            '✓',
-            `${progress.completed.length}/${lessons.length}`,
-            t('Lessons explored'),
-            '#E6EFDE',
-          ],
-          ['♨', streak(progress.days), t('Day streak'), '#FBE7D9'],
-        ].map(([icon, value, label, bg]) => (
-          <View
-            key={label}
-            style={[
-              s.card,
-              {
-                flex: 1,
-                minWidth: 95,
-                padding: width < 600 ? 15 : 22,
-                flexDirection: width < 600 ? 'column' : 'row',
-                alignItems: 'center',
-                gap: 16,
-              },
-            ]}
-          >
-            <Text
-              style={{
-                fontSize: 26,
-                color: colors.green,
-                backgroundColor: String(bg),
-                padding: 10,
-                borderRadius: 14,
-              }}
-            >
-              {icon}
-            </Text>
-            <View>
-              <Text
-                style={{ fontSize: 25, fontWeight: '800', color: colors.ink }}
-              >
-                {value}
-              </Text>
-              <Text style={{ fontSize: 12, color: colors.muted, marginTop: 3 }}>
-                {label}
-              </Text>
-            </View>
-          </View>
-        ))}
-      </View>
-      <View style={[s.row, { justifyContent: 'space-between', marginTop: 12 }]}>
-        <View>
-          <Text style={s.section}>{t('Your learning trail')}</Text>
-          <Text style={[s.sub, { marginTop: 4 }]}>
-            {t('The whole alphabet. A whole new world.')}
-          </Text>
-        </View>
-        <Text style={s.eyebrow}>{t('CHAPTER 01')}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 14 }}>
-        {groups.map((letterGroup, i) => {
-          const count = letterGroup.words.filter((word) =>
-            progress.completed.includes(word.id),
-          ).length;
-          return (
-            <Pressable
-              key={t(letterGroup.name)}
-              accessibilityRole="button"
-              accessibilityLabel={t('Learn {letter}, {count} of 2 completed', {
-                letter: t(letterGroup.name),
-                count,
-              })}
-              onPress={() =>
-                router.push(
-                  `/lesson/${letterGroup.words.find((word) => !progress.completed.includes(word.id))?.id ?? letterGroup.words[0].id}`,
-                )
-              }
-              style={({ pressed }) => [
-                s.card,
-                {
-                  flexGrow: 1,
-                  flexBasis: width < 600 ? '43%' : '17%',
-                  padding: 20,
-                  alignItems: 'center',
-                  backgroundColor: pressed ? '#F4F8EA' : '#FFF',
-                },
-              ]}
-            >
-              <View
-                style={[
-                  s.row,
-                  { width: '100%', justifyContent: 'space-between' },
-                ]}
-              >
-                <Text style={{ fontSize: 12, color: colors.muted }}>
-                  {String(i + 1).padStart(2, '0')}
-                </Text>
-                <Text style={{ color: count === 2 ? colors.green : '#B9C4AD' }}>
-                  {' '}
-                  {count === 2 ? '✓' : '✧'}
-                </Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor: letterGroup.color,
-                  width: 76,
-                  height: 82,
-                  borderRadius: 24,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ fontSize: 53, color: colors.ink }}>
-                  {letterGroup.letter}
-                </Text>
-              </View>
-              <Text
-                style={{ fontSize: 20, fontWeight: '800', color: colors.ink }}
-              >
-                {t(letterGroup.name)}
-              </Text>
-              <Text style={{ fontSize: 12, color: colors.muted }}>
-                {letterGroup.words.map((word) => t(word.english)).join(' · ')}
-              </Text>
-              <View
-                style={{
-                  height: 5,
-                  backgroundColor: '#EDF0E5',
-                  width: '100%',
-                  borderRadius: 5,
-                }}
-              >
-                <View
-                  style={{
-                    height: 5,
-                    width: `${count * 50}%`,
-                    backgroundColor: colors.green,
-                    borderRadius: 5,
-                  }}
-                />
-              </View>
-              <Text style={{ fontSize: 12, color: colors.muted }}>
-                {t('{count} of 2 explored', { count })}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
-      <View style={[s.row, { alignItems: 'stretch' }]}>
-        <View
-          style={[
-            s.card,
-            { flex: 1, minWidth: 250, backgroundColor: '#EDF4E7' },
-          ]}
-        >
-          <Text style={s.eyebrow}>{t('A WORD TO WONDER ABOUT')}</Text>
-          <View style={s.row}>
-            <Text style={{ fontSize: 50 }}>{next.emoji}</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 30, color: colors.ink }}>
-                {next.arabic}
-              </Text>
-              <Text style={s.sub}>
-                {t(next.english)} · {next.say}
-              </Text>
-            </View>
-            <Button secondary onPress={() => router.push(`/lesson/${next.id}`)}>
-              {t('Explore →')}
-            </Button>
-          </View>
-        </View>
-        <View
-          style={[
-            s.card,
-            { flex: 1, minWidth: 250, backgroundColor: '#FFF3D8' },
-          ]}
-        >
-          <Text style={s.eyebrow}>{t('READY FOR A LITTLE CHALLENGE?')}</Text>
-          <Text style={s.section}>{t('Let’s play “Which letter?”')}</Text>
-          <View style={[s.row, { justifyContent: 'space-between' }]}>
-            <Text style={s.sub}>{t('5 questions. Lots of discovery.')}</Text>
-            <Button secondary onPress={() => router.push('/quiz')}>
-              {t('Play quiz →')}
-            </Button>
-          </View>
-        </View>
+        <Button secondary onPress={() => router.push('/quiz')}>
+          {t('Play quiz →')}
+        </Button>
       </View>
     </Shell>
   );
 }
+const styles = StyleSheet.create({
+  stage: {
+    backgroundColor: '#E4F0BE',
+    borderRadius: 34,
+    padding: 28,
+    alignItems: 'center',
+    gap: 18,
+    borderWidth: 2,
+    borderColor: '#D0DFA9',
+    borderBottomWidth: 8,
+  },
+  kicker: {
+    fontSize: 12,
+    letterSpacing: 1.5,
+    fontWeight: '900',
+    color: '#54733D',
+    textAlign: 'center',
+  },
+  emblem: {
+    height: 167,
+    width: 180,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F7F7CC',
+    borderRadius: 65,
+    borderWidth: 4,
+    borderColor: '#C4DA7E',
+    transform: [{ rotate: '-5deg' }],
+  },
+  stat: {
+    flex: 1,
+    minWidth: 85,
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#FFF',
+    paddingVertical: 20,
+    paddingHorizontal: 8,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: '#E1E7D6',
+  },
+});

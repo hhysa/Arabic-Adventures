@@ -98,6 +98,7 @@ const files = [
   'src/LanguageSwitcher.tsx',
   'src/LessonBoard.tsx',
   'app/index.tsx',
+  'app/levels.tsx',
   'app/lesson/[id].tsx',
   'app/quiz.tsx',
   'app/progress.tsx',
@@ -146,7 +147,7 @@ if (process.argv.includes('--export')) {
   const html = fs.readFileSync('dist/index.html', 'utf8');
   assert.ok(html.includes('lang="sq"'));
   assert.ok(html.includes('Aventura me arabishten'));
-  assert.ok(html.includes('Fillo të mësosh'));
+  assert.ok(html.includes('Le të luajmë!'));
   assert.ok(!html.includes('Start learning'));
 }
 console.log(

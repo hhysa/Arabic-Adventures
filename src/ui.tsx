@@ -111,7 +111,8 @@ export function Shell({
       </ScrollView>
       <View style={[s.nav, { maxWidth: '96%' }]}>
         {[
-          ['/', '⌂', t('Learn')],
+          ['/', '⌂', t('Home')],
+          ['/levels', '⚑', t('Levels')],
           ['/quiz', '✦', t('Quiz')],
           ['/progress', '◷', t('My progress')],
         ].map(([href, icon, label]) => (
@@ -122,7 +123,7 @@ export function Shell({
             onPress={() => router.push(href as any)}
             style={[
               s.navItem,
-              { paddingHorizontal: width < 400 ? 16 : 24 },
+              { paddingHorizontal: width < 600 ? 10 : 20 },
               path === href && { backgroundColor: '#E7EFD9' },
             ]}
           >

@@ -15,7 +15,7 @@
     "start": "expo start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node scripts/check-translations.cjs && node scripts/check-drawing.cjs && node scripts/check-progress.cjs",
+    "test": "node scripts/check-translations.cjs && node scripts/check-drawing.cjs && node scripts/check-progress.cjs && node scripts/check-levels.cjs",
     "test:export": "node scripts/check-translations.cjs --export",
     "audio:sync": "node scripts/sync-audio.cjs && prettier --write src/audio.ts",
     "verify": "npm run typecheck && npm test && npm run build && npm run test:export && npm run format:check"

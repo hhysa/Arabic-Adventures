@@ -1,5 +1,47 @@
 import { alphabetTranslations } from './alphabet-translations';
 export const sq = {
+  Home: 'Kreu',
+  Levels: 'Nivelet',
+  'YOUR NEXT ADVENTURE STARTS HERE': 'AVENTURA JOTE E RADHËS FILLON KËTU',
+  'Little explorer, big adventure!': 'Eksplorues i vogël, aventurë e madhe!',
+  '28 letter levels. Seven worlds. A whole alphabet to discover.':
+    '28 nivele me shkronja. Shtatë botë. Një alfabet për të zbuluar.',
+  'Continue adventure →': 'Vazhdo aventurën →',
+  'Let’s play! →': 'Le të luajmë! →',
+  'Explore the level map': 'Zbulo hartën e niveleve',
+  'Next stop: level {number} · {letter}':
+    'Ndalesa tjetër: niveli {number} · {letter}',
+  'You discovered the whole alphabet!': 'E zbulove të gjithë alfabetin!',
+  'Levels complete': 'Nivele të përfunduara',
+  'BONUS CHALLENGE': 'SFIDË SHTESË',
+  'Five questions. More stars!': 'Pesë pyetje. Më shumë yje!',
+  'Put your letter skills to the test.': 'Provo sa mirë i njeh shkronjat.',
+  'YOUR ADVENTURE MAP': 'HARTA E AVENTURËS TËNDE',
+  'One letter. One new level.': 'Një shkronjë. Një nivel i ri.',
+  'Finish both words to complete a level. You can explore or replay any letter.':
+    'Përfundo të dyja fjalët për të mbyllur një nivel. Mund të zbulosh ose përsëritësh çdo shkronjë.',
+  '{count} of {total} levels complete':
+    '{count} nga {total} nivele të përfunduara',
+  'Continue level {number} →': 'Vazhdo nivelin {number} →',
+  'WORLD {number}': 'BOTA {number}',
+  'YOU ARE HERE': 'TI JE KËTU',
+  'Level {number}: {letter}, {count} of 2 words':
+    'Niveli {number}: {letter}, {count} nga 2 fjalë',
+  'World complete!': 'Bota u përfundua!',
+  'Four letters. A new discovery at every stop.':
+    'Katër shkronja. Një zbulim i ri në çdo ndalesë.',
+  'The first steps': 'Hapat e parë',
+  'The sunny trail': 'Shtegu me diell',
+  'The hidden garden': 'Kopshti i fshehtë',
+  'The river crossing': 'Kalimi i lumit',
+  'The mountain path': 'Shtegu i malit',
+  'The star valley': 'Lugina e yjeve',
+  'The final adventure': 'Aventura e fundit',
+  '← Level map': '← Harta e niveleve',
+  'Level {number} complete!': 'Niveli {number} u përfundua!',
+  'Both words discovered. Your next adventure is waiting.':
+    'I zbulove të dyja fjalët. Aventura tjetër të pret.',
+  'Back to the level map →': 'Kthehu te harta e niveleve →',
   '{letters} letters  ·  {lessons} little lessons  ·  Endless curiosity':
     '{letters} shkronja  ·  {lessons} mësime të shkurtra  ·  Kureshtje pa fund',
   'The whole alphabet. A whole new world.': 'I gjithë alfabeti. Një botë e re.',
