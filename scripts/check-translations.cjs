@@ -3,11 +3,32 @@ const fs = require('node:fs');
 const ts = require('typescript');
 function load(file) {
   const target = { exports: {} };
-  new Function('exports', 'module', ts.transpile(fs.readFileSync(file, 'utf8'), { module: ts.ModuleKind.CommonJS }))(target.exports, target);
+  const path=require('node:path');
+  new Function('exports', 'module', 'require', ts.transpile(fs.readFileSync(file, 'utf8'), { module: ts.ModuleKind.CommonJS }))(target.exports, target, name=>load(path.join(path.dirname(file),name+'.ts')));
   return target.exports;
 }
 const {sq, translate} = load('src/translations.ts');
 const {groups, lessons} = load('src/data.ts');
+assert.equal(groups.map(g=>g.letter).join(''),'أبتثجحخدذرزسشصضطظعغفقكلمنهوي');
+assert.equal(groups.length,28);
+assert.equal(lessons.length,56);
+assert.equal(new Set(lessons.map(l=>l.id)).size,56);
+for(const lesson of lessons){
+  assert.equal(lesson.arabic[0],groups[lesson.group].letter,`Wrong initial: ${lesson.id}`);
+  assert.ok(fs.statSync(`assets/audio/${lesson.id}.wav`).size>1000,`Missing audio: ${lesson.id}`);
+}
+for(const id of ['lion','rabbit','duck','door','apple','dates','fish','car','moon','pencil'])assert.ok(lessons.some(l=>l.id===id),'Existing progress ID changed');
+const {makeQuiz}=load('src/quiz.ts');
+let seed=17;
+const random=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+const covered=new Set();
+for(let i=0;i<100;i++){
+ const questions=makeQuiz(random);
+ assert.equal(questions.length,5);
+ assert.equal(new Set(questions.map(q=>q.word.group)).size,5);
+ for(const q of questions){assert.equal(new Set(q.options).size,4);assert.ok(q.options.includes(q.word.group));covered.add(q.word.group);}
+}
+assert.equal(covered.size,28,'Quiz must cover the entire alphabet');
 const placeholders = value => [...value.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
 for (const [english, albanian] of Object.entries(sq)) {
   assert.ok(albanian.trim(), `Empty translation: ${english}`);

@@ -1,1 +1,26 @@
-{"expo":{"name":"Arabic Adventures","slug":"arabic-adventures","scheme":"arabic-adventures","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","plugins":["expo-router"],"web":{"bundler":"metro","output":"static"}}}
+{
+  "expo": {
+    "name": "Arabic Adventures",
+    "slug": "arabic-adventures",
+    "scheme": "arabic-adventures",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router"
+    ],
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5e94a59a-db35-4244-874d-9baad1449632"
+      }
+    },
+    "android": {
+      "package": "com.ali2107.arabicadventures"
+    }
+  }
+}

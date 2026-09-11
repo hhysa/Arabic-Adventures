@@ -18,7 +18,7 @@ export default function Lesson(){
  const g=groups[lesson.group],done=p.completed.includes(lesson.id),next=lessons[(lessons.indexOf(lesson)+1)%lessons.length];
  const groupWords=lessons.filter(word=>word.group===lesson.group);
  const orange:BoardWord={id:'orange',arabic:'بُرْتُقَال',english:'Orange',emoji:'🍊'};
- const words=lesson.group===1?[lesson.id==='door'?lesson:groupWords[0],orange]:groupWords;
+ const words=g.letter==='ب'?[lesson.id==='door'?lesson:groupWords[0],orange]:groupWords;
  const boardWidth=Math.min(width-20,780);
  function play(wordId:string){try{player.pause();player.replace(audio[wordId]);player.play();setError('');}catch{setError('Audio could not play. Please try again.');}}
  return <View style={{flex:1,backgroundColor:'#E2E7DC'}}>
@@ -34,7 +34,7 @@ export default function Lesson(){
     <Text style={[s.sub,{textAlign:'center'}]}>{t('Tap a picture or word to hear it in Arabic.')}</Text>
     {error||p.error||languageError?<Text accessibilityRole="alert">{t(error||p.error||languageError)}</Text>:null}
     <View style={[s.row,{justifyContent:'center'}]}>{g.words.map(w=><Button key={w[0]} secondary={lesson.id!==w[0]} onPress={()=>router.replace(`/lesson/${w[0]}`)}>{t(w[2])} {p.completed.includes(w[0])?'✓':''}</Button>)}</View>
-    {lesson.group===0&&<Text style={s.sub}>{t('Alif joins to the letter before it, but never to the letter after it.')}</Text>}
+    {'أدذرزو'.includes(g.letter)&&<Text style={s.sub}>{t('This letter joins to the letter before it, but never to the letter after it.')}</Text>}
     <View style={[s.row,{justifyContent:'center'}]}>
      <Button secondary onPress={()=>play(lesson.id)}>{t('♫  Listen to the word')}</Button>
      <Button secondary onPress={()=>router.push(`/coloring?id=${lesson.id}`)}>{t('✎  Let’s color')}</Button>

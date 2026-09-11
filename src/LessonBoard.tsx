@@ -33,7 +33,7 @@ export function LessonBoard({group,words,width,onPlay}:{group:number;words:Board
  return <View style={{width,backgroundColor:'#EDF9B2',borderWidth:Math.max(4,12*scale),borderColor:'#BAC2B4'}}>
   <View style={{height:158*scale,flexDirection:'row',alignItems:'flex-start'}}>
    <View style={{flex:1,flexDirection:'row',justifyContent:'space-evenly',paddingTop:23*scale}}>{[3,2,1].map(index=><View key={index} style={{alignItems:'center',gap:19*scale}}><View style={{backgroundColor:'#8DC63E',width:77*scale,height:77*scale,borderRadius:50,alignItems:'center',justifyContent:'center'}}><Text style={{fontSize:36*scale,color:'#F3FACD',writingDirection:'rtl'}}>{g.forms[index]}</Text></View><Text style={{fontFamily:'serif',fontWeight:'700',color:'#526735',fontSize:Math.max(12,17*scale)}}>{t(['On its own','Beginning','Middle','Ending'][index])}</Text></View>)}</View>
-   <Text style={{fontFamily:'serif',fontWeight:'700',fontSize:67*scale,color:'#8CC63E',paddingTop:20*scale,marginRight:22*scale}}>{language==='sq'&&group===1?'be':t(g.name).toLowerCase()}</Text>
+   <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.5} style={{maxWidth:width*.24,fontFamily:'serif',fontWeight:'700',fontSize:(t(g.name).length>5?37:67)*scale,color:'#8CC63E',paddingTop:20*scale,marginRight:22*scale}}>{language==='sq'&&g.letter==='ب'?'be':t(g.name).toLowerCase()}</Text>
    <View style={{width:202*scale,height:134*scale,backgroundColor:'#8DC63E',alignItems:'center',justifyContent:'center'}}><Text accessibilityLabel={t('On its own')} style={{fontSize:85*scale,color:'#F2F6D8',writingDirection:'rtl'}}>{g.letter}</Text></View>
   </View>
   {words.map(word=><WordRow key={word.id} word={word} width={width-24*scale} onPlay={onPlay}/>)}

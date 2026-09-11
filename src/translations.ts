@@ -1,4 +1,10 @@
+import {alphabetTranslations} from './alphabet-translations';
 export const sq = {
+  '{letters} letters  ·  {lessons} little lessons  ·  Endless curiosity':'{letters} shkronja  ·  {lessons} mësime të shkurtra  ·  Kureshtje pa fund',
+  'The whole alphabet. A whole new world.':'I gjithë alfabeti. Një botë e re.',
+  '{count} of {total} lessons · {days} day streak':'{count} nga {total} mësime · {days} ditë radhazi',
+  'This letter joins to the letter before it, but never to the letter after it.':'Kjo shkronjë lidhet me shkronjën para saj, por kurrë me shkronjën pas saj.',
+  ...alphabetTranslations,
   'Tap a picture or word to hear it in Arabic.':'Prek një figurë ose fjalë për ta dëgjuar në arabisht.',
   'Arabic Adventures': 'Aventura me arabishten',
   'LITTLE STEPS. BIG DISCOVERIES.': 'HAPA TË VEGJËL. ZBULIME TË MËDHA.',
@@ -62,7 +68,7 @@ export const sq = {
   'Language': 'Gjuha',
   'Lion':'Luan', 'Rabbit':'Lepur', 'Duck':'Rosë', 'Door':'Derë', 'Apple':'Mollë', 'Dates':'Hurma',
   'Fish':'Peshk', 'Car':'Makinë', 'Moon':'Hënë', 'Pencil':'Laps', 'Orange':'Portokall',
-  'Alif':'Elif', 'Baa':'Ba', 'Taa':'Ta', 'Seen':'Sin', 'Qaaf':'Kaf',
+  'Alif':'Elif', 'Baa':'Ba', 'Taa':'Ta', 'Seen':'Sin', 'Qaaf':'Kaf (ق)',
   'Orange color':'Portokalli', 'Red':'E kuqe', 'Green':'E gjelbër', 'Blue':'Blu', 'Purple':'Vjollcë', 'Yellow':'E verdhë', 'Dark green':'E gjelbër e errët',
 } as const;
 export type Language = 'sq' | 'en';

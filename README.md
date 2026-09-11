@@ -1,6 +1,8 @@
 # Arabic Adventures
 
-A child-friendly Expo / React Native app with five Arabic letters, ten vocabulary lessons, a bonus orange word, local pronunciation, drawing activities, quizzes, and device-local progress.
+A child-friendly Expo / React Native app with all 28 Arabic letters in alphabetical order, 56 vocabulary lessons, a bonus orange word, local pronunciation, drawing activities, quizzes, and device-local progress.
+
+Every letter uses the shared poster board and includes two words, contextual forms, coloring, and bundled WAV audio. Quizzes sample five different letters across the whole alphabet with four choices per question. Existing completion IDs are preserved when new letters are added.
 
 ## Languages
 
