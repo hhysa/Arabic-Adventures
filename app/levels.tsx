@@ -135,6 +135,7 @@ export default function Levels() {
                 >
                   {level.count >= 1 ? '★' : '☆'}
                   {level.count >= 2 ? '★' : '☆'}
+                  {level.complete ? '★' : '☆'}
                 </Text>
               </View>
             </View>

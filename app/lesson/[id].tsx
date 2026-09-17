@@ -5,6 +5,7 @@ import {
   Text,
   Pressable,
   ScrollView,
+  Modal,
   useWindowDimensions,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -24,7 +25,8 @@ export default function Lesson() {
     lesson = lessons.find((l) => l.id === id),
     progress = useProgress();
   const { width } = useWindowDimensions(),
-    [error, setError] = useState('');
+    [error, setError] = useState(''),
+    [showCompletion, setShowCompletion] = useState(false);
   const player = useAudioPlayer(null);
   if (!lesson)
     return (
@@ -36,12 +38,32 @@ export default function Lesson() {
       </View>
     );
   const letterGroup = groups[lesson.group],
-    done = progress.completed.includes(lesson.id),
     next = groups[(lesson.group + 1) % groups.length].words[0];
   const levelDone = letterGroup.words.every((word) =>
     progress.completed.includes(word.id),
   );
   const boardWidth = Math.min(width - 20, 780);
+  function closeCompletion() {
+    setShowCompletion(false);
+    player.pause();
+  }
+  function nextLetter() {
+    closeCompletion();
+    router.replace(`/lesson/${next.id}`);
+  }
+  function finishLetter() {
+    if (!progress.ready || levelDone || showCompletion) return;
+    letterGroup.words.forEach((word) => progress.complete(word.id));
+    setShowCompletion(true);
+    try {
+      player.pause();
+      player.replace(require('../../assets/audio/mashallah.mp3'));
+      player.play();
+      setError('');
+    } catch {
+      setError('Audio could not play. Please try again.');
+    }
+  }
   function play(wordId: string) {
     try {
       player.pause();
@@ -108,40 +130,84 @@ export default function Lesson() {
             accessibilityRole="alert"
             style={[s.sub, { textAlign: 'center' }]}
           >
-            {done
-              ? t('Your three stars are saved.')
-              : t('Finish this lesson to collect three stars.')}
+            {levelDone
+              ? t('Your progress is saved.')
+              : t('Finish both words to complete this letter.')}
           </Text>
-          {levelDone && (
+          <Button
+            disabled={!progress.ready}
+            onPress={levelDone ? nextLetter : finishLetter}
+          >
+            {levelDone ? t('Next letter →') : t('I learned this letter!')}
+          </Button>
+        </View>
+      </ScrollView>
+      <Modal
+        visible={showCompletion}
+        transparent
+        animationType="fade"
+        onRequestClose={closeCompletion}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(28, 48, 25, 0.55)',
+            justifyContent: 'center',
+            padding: 24,
+          }}
+        >
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          >
             <View
+              accessibilityViewIsModal
               style={[
                 s.card,
-                { alignItems: 'center', backgroundColor: '#FFF0BA' },
+                {
+                  width: '100%',
+                  maxWidth: 440,
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#FFF0BA',
+                },
               ]}
             >
-              <Text style={{ fontSize: 44 }}>🏆</Text>
-              <Text style={s.section}>
+              <Text aria-hidden style={{ fontSize: 44 }}>
+                🏆
+              </Text>
+              <Text
+                accessibilityRole="header"
+                style={[s.section, { textAlign: 'center' }]}
+              >
+                {t('MashaAllah!')}
+              </Text>
+              <Text style={[s.section, { textAlign: 'center' }]}>
                 {t('Level {number} complete!', { number: lesson.group + 1 })}
+              </Text>
+              <Text aria-hidden style={{ fontSize: 36, color: '#AF7A15' }}>
+                ★★★
               </Text>
               <Text style={[s.sub, { textAlign: 'center' }]}>
                 {t('Both words discovered. Your next adventure is waiting.')}
               </Text>
-              <Button onPress={() => router.push('/levels')}>
+              {error ? <Text accessibilityRole="alert">{t(error)}</Text> : null}
+              <Button onPress={nextLetter}>{t('Next letter →')}</Button>
+              <Button secondary onPress={closeCompletion}>
+                {t('Keep practicing')}
+              </Button>
+              <Button
+                secondary
+                onPress={() => {
+                  closeCompletion();
+                  router.push('/levels');
+                }}
+              >
                 {t('Back to the level map →')}
               </Button>
             </View>
-          )}
-          <Button
-            disabled={!progress.ready}
-            onPress={() => {
-              if (!done) progress.complete(lesson.id);
-              else router.replace(`/lesson/${next.id}`);
-            }}
-          >
-            {done ? t('Next letter →') : t('I learned this word!  ★ +3')}
-          </Button>
+          </ScrollView>
         </View>
-      </ScrollView>
+      </Modal>
     </View>
   );
 }

@@ -71,14 +71,14 @@ Keep this structure small. Screens own their interaction state; shared modules c
 1. `src/data.ts` defines each group and its words. A word has named fields: `id`, `arabic`, `english`, `say` (transliteration), and `emoji`.
 2. `lessons` flattens these words and adds a numeric `group` index. The index is used for in-memory lookup only.
 3. The home screen opens `/lesson/<word-id>`. The lesson screen passes the group's words to `LessonBoard` and looks up bundled audio by the same ID.
-4. Completing a word records that ID and awards three stars once. Reopening or completing it again does not award another three stars.
-5. The next-word action follows the flat catalog order. The home screen recommends the first unfinished word, returning to the first word when all are complete.
+4. Finishing a letter records both displayed word IDs. Each newly completed word awards three stars once; saved completions are not rewarded again. A completion popup shows three stars and plays the bundled Arabic “MashaAllah” clip once. Reopening a finished letter does not replay the celebration.
+5. The next-letter action opens the first word of the following letter, wrapping from Yaa to Alif. The home screen recommends the first unfinished word, returning to the first word when all are complete.
 
 Baa has two vocabulary lessons: duck and orange, matching the supplied reference. Both count toward completion within the 56-lesson total.
 
 ### Arabic rendering and artwork
 
-Always render complete Arabic words as joined text. The poster's red highlight is a clipped second copy of the **whole word**, not separately styled letters. Splitting Arabic strings into independently rendered letters can break joining and diacritics. The highlight width is visual rather than font-metric-based, so check it when changing fonts or word sizes.
+Render each Arabic word in one parent `Text` layout. The first letter and its combining vowel marks use a nested inline `Text` color span, so shaping stays continuous and the entire initial glyph is red. Do not put the pieces in separate layout views or use a fixed-width clipping mask.
 
 Letter forms are stored in this order: isolated, beginning, middle, ending. The board shows ending, middle and beginning across the top, with the isolated letter in the square. Letters that do not connect forward use their appropriate repeated forms.
 
@@ -115,7 +115,7 @@ The checks intentionally assert the current 28-letter / 56-lesson scope. If a pr
 
 ### Generate pronunciation files on Windows
 
-The existing recordings were generated with the installed Microsoft Naayf Arabic voice. Generation is an optional contributor tool; end users do not need that voice installed.
+The vocabulary recordings were generated with the installed Microsoft Naayf Arabic voice. The separate `assets/audio/mashallah.mp3` celebration clip was synthesized from “مَا شَاءَ اللَّهُ” using Google Translate’s Arabic speech service and is bundled locally; playback makes no request to that service. Generation is an optional contributor tool; end users do not need that voice installed.
 
 ```powershell
 npm run audio:sync

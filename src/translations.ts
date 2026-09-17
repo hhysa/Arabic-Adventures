@@ -105,6 +105,12 @@ export const sq = {
   'Finish this lesson to collect three stars.':
     'Përfundo këtë mësim për të mbledhur tre yje.',
   'Next letter →': 'Shkronja tjetër →',
+  'MashaAllah!': 'MashaAllah!',
+  'Keep practicing': 'Vazhdo të praktikosh',
+  'Your progress is saved.': 'Përparimi yt u ruajt.',
+  'Finish both words to complete this letter.':
+    'Përfundo të dyja fjalët për të përfunduar këtë shkronjë.',
+  'I learned this letter!': 'E mësova këtë shkronjë!',
   'I learned this word!  ★ +3': 'E mësova këtë fjalë!  ★ +3',
   'A LITTLE BRAIN ADVENTURE': 'NJË AVENTURË E VOGËL PËR MENDJEN',
   'Look at you grow!': 'Shiko sa ke mësuar!',

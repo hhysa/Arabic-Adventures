@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
 import Svg, {
   Defs,
   ClipPath,
@@ -56,62 +57,55 @@ function JoinedWord({
   word,
   width,
   fontSize,
+  fontFamily,
   ghost = false,
 }: {
   word: string;
   width: number;
   fontSize: number;
+  fontFamily?: string;
   ghost?: boolean;
 }) {
-  // Keep complete joined Arabic in both layers; clip only the highlight layer.
-  const style = {
-    width,
-    fontSize,
-    lineHeight: fontSize * 1.7,
-    fontWeight: '700' as const,
-    textAlign: 'right' as const,
-    writingDirection: 'rtl' as const,
-    color: ghost ? '#C7CEAF' : '#48762B',
-  };
+  // Inline Text shares one Arabic shaping run. Keep the first letter's vowel
+  // marks with it so the complete glyph is colored, without a clipping mask.
+  const [, firstLetter = '', rest = word] =
+    word.match(/^(\P{M}\p{M}*)(.*)$/u) ?? [];
   return (
-    <View style={{ width, height: fontSize * 1.7 }}>
-      <Text style={style}>{word}</Text>
-      {!ghost && (
-        <View
-          pointerEvents="none"
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            width: fontSize * 0.48,
-            height: '100%',
-            overflow: 'hidden',
-          }}
-        >
-          <Text
-            accessible={false}
-            style={[
-              style,
-              { position: 'absolute', right: 0, color: '#ED171A' },
-            ]}
-          >
-            {word}
-          </Text>
-        </View>
+    <Text
+      style={{
+        width,
+        height: fontSize * 1.7,
+        fontSize,
+        lineHeight: fontSize * 1.7,
+        fontFamily,
+        fontWeight: fontFamily ? '400' : '700',
+        textAlign: 'right',
+        writingDirection: 'rtl',
+        color: ghost ? '#C7CEAF' : '#48762B',
+      }}
+    >
+      {ghost ? (
+        word
+      ) : (
+        <>
+          <Text style={{ color: '#ED171A' }}>{firstLetter}</Text>
+          {rest}
+        </>
       )}
-    </View>
+    </Text>
   );
 }
+
 function WordRow({
   word,
   width,
+  fontFamily,
   onPlay,
   onColor,
 }: {
   word: VocabularyWord;
   width: number;
+  fontFamily?: string;
   onPlay: (id: string) => void;
   onColor: (id: string) => void;
 }) {
@@ -229,6 +223,7 @@ function WordRow({
       >
         <JoinedWord
           word={word.arabic}
+          fontFamily={fontFamily}
           width={width * 0.41}
           fontSize={word.arabic.length > 10 ? 65 * scale : 83 * scale}
           ghost
@@ -242,6 +237,7 @@ function WordRow({
       >
         <JoinedWord
           word={word.arabic}
+          fontFamily={fontFamily}
           width={width * 0.48}
           fontSize={word.arabic.length > 10 ? 73 * scale : 94 * scale}
         />
@@ -265,6 +261,9 @@ export function LessonBoard({
   const { t, language } = useLanguage(),
     g = groups[group],
     scale = width / 887;
+  const [fontsLoaded] = useFonts({
+    LessonNaskh: require('../assets/fonts/NotoNaskhArabic-Regular.ttf'),
+  });
   return (
     <View
       style={{
@@ -303,7 +302,11 @@ export function LessonBoard({
               >
                 <Text
                   style={{
-                    fontSize: 36 * scale,
+                    fontFamily: fontsLoaded ? 'LessonNaskh' : undefined,
+                    fontSize: 44 * scale,
+                    lineHeight: 66 * scale,
+                    textAlign: 'center',
+                    includeFontPadding: false,
                     color: '#F3FACD',
                     writingDirection: 'rtl',
                   }}
@@ -355,6 +358,7 @@ export function LessonBoard({
             accessibilityLabel={t('On its own')}
             style={{
               fontSize: 85 * scale,
+              fontFamily: fontsLoaded ? 'LessonNaskh' : undefined,
               color: '#F2F6D8',
               writingDirection: 'rtl',
             }}
@@ -367,6 +371,7 @@ export function LessonBoard({
         <WordRow
           key={word.id}
           word={word}
+          fontFamily={fontsLoaded ? 'LessonNaskh' : undefined}
           width={width - 24 * scale}
           onPlay={onPlay}
           onColor={onColor}
