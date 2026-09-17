@@ -57,7 +57,7 @@ export default function Lesson() {
     setShowCompletion(true);
     try {
       player.pause();
-      player.replace(require('../../assets/audio/mashallah.mp3'));
+      player.replace(require('../../assets/audio/MashaAllah.mp3'));
       player.play();
       setError('');
     } catch {
