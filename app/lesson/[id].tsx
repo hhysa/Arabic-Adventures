@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useAudioPlayer } from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { Button, s } from '../../src/ui';
 import { groups, lessons } from '../../src/data';
 import { useProgress } from '../../src/progress';
@@ -28,6 +28,10 @@ export default function Lesson() {
     [error, setError] = useState(''),
     [showCompletion, setShowCompletion] = useState(false);
   const player = useAudioPlayer(null);
+  const celebrationPlayer = useAudioPlayer(
+    require('../../assets/audio/MashaAllah.mp3'),
+  );
+  const celebrationStatus = useAudioPlayerStatus(celebrationPlayer);
   if (!lesson)
     return (
       <View style={[s.card, { margin: 24 }]}>
@@ -45,7 +49,10 @@ export default function Lesson() {
   const boardWidth = Math.min(width - 20, 780);
   function closeCompletion() {
     setShowCompletion(false);
-    player.pause();
+    celebrationPlayer.pause();
+    void celebrationPlayer.seekTo(0).catch(() => {
+      setError('Audio could not play. Please try again.');
+    });
   }
   function nextLetter() {
     closeCompletion();
@@ -57,8 +64,7 @@ export default function Lesson() {
     setShowCompletion(true);
     try {
       player.pause();
-      player.replace(require('../../assets/audio/MashaAllah.mp3'));
-      player.play();
+      celebrationPlayer.play();
       setError('');
     } catch {
       setError('Audio could not play. Please try again.');
@@ -190,7 +196,11 @@ export default function Lesson() {
               <Text style={[s.sub, { textAlign: 'center' }]}>
                 {t('Both words discovered. Your next adventure is waiting.')}
               </Text>
-              {error ? <Text accessibilityRole="alert">{t(error)}</Text> : null}
+              {error || celebrationStatus.error ? (
+                <Text accessibilityRole="alert">
+                  {t(error || 'Audio could not play. Please try again.')}
+                </Text>
+              ) : null}
               <Button onPress={nextLetter}>{t('Next letter →')}</Button>
               <Button secondary onPress={closeCompletion}>
                 {t('Keep practicing')}

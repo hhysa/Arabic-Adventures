@@ -45,7 +45,7 @@ The native app bundles images and audio and saves progress locally. The web expo
 | `src/levels.ts`                | Level status derived from existing completed word IDs. Both words complete a level; all levels remain available to replay.       |
 | `app/lesson/[id].tsx`          | Finds a lesson by its stable word ID, connects audio and completion, renders the poster board. Exports the static lesson routes. |
 | `app/coloring.tsx`             | Temporary drawing state, pointer responder, palette, Undo and reset.                                                             |
-| `app/quiz.tsx`                 | Five-question round, answer feedback, rewards and replay.                                                                        |
+| `app/quiz.tsx`                 | Ten-question round: five letter questions and five image-to-Arabic questions, answer feedback, rewards and replay.               |
 | `app/progress.tsx`             | Completed words and aggregate progress.                                                                                          |
 | `app/+html.tsx`                | Default Albanian document language and web metadata.                                                                             |
 | `src/data.ts`                  | Typed letter groups, vocabulary objects, derived flat lesson list.                                                               |
@@ -71,7 +71,7 @@ Keep this structure small. Screens own their interaction state; shared modules c
 1. `src/data.ts` defines each group and its words. A word has named fields: `id`, `arabic`, `english`, `say` (transliteration), and `emoji`.
 2. `lessons` flattens these words and adds a numeric `group` index. The index is used for in-memory lookup only.
 3. The home screen opens `/lesson/<word-id>`. The lesson screen passes the group's words to `LessonBoard` and looks up bundled audio by the same ID.
-4. Finishing a letter records both displayed word IDs. Each newly completed word awards three stars once; saved completions are not rewarded again. A completion popup shows three stars and plays the bundled Arabic “MashaAllah” clip once. Reopening a finished letter does not replay the celebration.
+4. Finishing a letter records both displayed word IDs. Each newly completed word awards three stars once; saved completions are not rewarded again. A completion popup shows three stars and plays the preloaded Arabic “MashaAllah” clip automatically on a dedicated player. Reopening a finished letter does not replay the celebration.
 5. The next-letter action opens the first word of the following letter, wrapping from Yaa to Alif. The home screen recommends the first unfinished word, returning to the first word when all are complete.
 
 Baa has two vocabulary lessons: duck and orange, matching the supplied reference. Both count toward completion within the 56-lesson total.
