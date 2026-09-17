@@ -1,8 +1,7 @@
 const assert = require('node:assert/strict');
 const { load } = require('./load-typescript.cjs');
-const { getLevels, worldNames } = load('src/levels.ts');
+const { getLevels } = load('src/levels.ts');
 assert.equal(getLevels([]).length, 28);
-assert.equal(worldNames.length, 7);
 assert.equal(
   getLevels([]).find((level) => !level.complete).nextWord.id,
   'lion',

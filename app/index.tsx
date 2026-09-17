@@ -42,7 +42,7 @@ export default function Home() {
             { textAlign: 'center', maxWidth: 450, color: '#526D43' },
           ]}
         >
-          {t('28 letter levels. Seven worlds. A whole alphabet to discover.')}
+          {t('28 letter levels. A whole alphabet to discover.')}
         </Text>
         <View style={{ width: '100%', maxWidth: 360, gap: 12, marginTop: 10 }}>
           <Button

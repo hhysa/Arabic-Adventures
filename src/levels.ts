@@ -18,12 +18,3 @@ export function getLevels(completed: string[]) {
     };
   });
 }
-export const worldNames = [
-  'The first steps',
-  'The sunny trail',
-  'The hidden garden',
-  'The river crossing',
-  'The mountain path',
-  'The star valley',
-  'The final adventure',
-];

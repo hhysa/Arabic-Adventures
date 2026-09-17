@@ -4,8 +4,8 @@ export const sq = {
   Levels: 'Nivelet',
   'YOUR NEXT ADVENTURE STARTS HERE': 'AVENTURA JOTE E RADHËS FILLON KËTU',
   'Little explorer, big adventure!': 'Eksplorues i vogël, aventurë e madhe!',
-  '28 letter levels. Seven worlds. A whole alphabet to discover.':
-    '28 nivele me shkronja. Shtatë botë. Një alfabet për të zbuluar.',
+  '28 letter levels. A whole alphabet to discover.':
+    '28 nivele me shkronja. Një alfabet për të zbuluar.',
   'Continue adventure →': 'Vazhdo aventurën →',
   'Let’s play! →': 'Le të luajmë! →',
   'Explore the level map': 'Zbulo hartën e niveleve',
@@ -23,20 +23,9 @@ export const sq = {
   '{count} of {total} levels complete':
     '{count} nga {total} nivele të përfunduara',
   'Continue level {number} →': 'Vazhdo nivelin {number} →',
-  'WORLD {number}': 'BOTA {number}',
   'YOU ARE HERE': 'TI JE KËTU',
   'Level {number}: {letter}, {count} of 2 words':
     'Niveli {number}: {letter}, {count} nga 2 fjalë',
-  'World complete!': 'Bota u përfundua!',
-  'Four letters. A new discovery at every stop.':
-    'Katër shkronja. Një zbulim i ri në çdo ndalesë.',
-  'The first steps': 'Hapat e parë',
-  'The sunny trail': 'Shtegu me diell',
-  'The hidden garden': 'Kopshti i fshehtë',
-  'The river crossing': 'Kalimi i lumit',
-  'The mountain path': 'Shtegu i malit',
-  'The star valley': 'Lugina e yjeve',
-  'The final adventure': 'Aventura e fundit',
   '← Level map': '← Harta e niveleve',
   'Level {number} complete!': 'Niveli {number} u përfundua!',
   'Both words discovered. Your next adventure is waiting.':

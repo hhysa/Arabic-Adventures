@@ -41,7 +41,7 @@ The native app bundles images and audio and saves progress locally. The web expo
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
 | `app/_layout.tsx`              | Root safe-area setup, language and progress providers, Expo Router stack.                                                        |
 | `app/index.tsx`                | Game home: play/continue, level totals, stars and bonus quiz.                                                                    |
-| `app/levels.tsx`               | Seven-world map with four letter levels per world; completed and current level markers.                                          |
+| `app/levels.tsx`               | One continuous map of all 28 letter levels, with completed and current level markers.                                            |
 | `src/levels.ts`                | Level status derived from existing completed word IDs. Both words complete a level; all levels remain available to replay.       |
 | `app/lesson/[id].tsx`          | Finds a lesson by its stable word ID, connects audio and completion, renders the poster board. Exports the static lesson routes. |
 | `app/coloring.tsx`             | Temporary drawing state, pointer responder, palette, Undo and reset.                                                             |
