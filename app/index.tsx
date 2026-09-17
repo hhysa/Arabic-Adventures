@@ -105,7 +105,7 @@ export default function Home() {
       >
         <View style={{ gap: 6, flex: 1, minWidth: 190 }}>
           <Text style={s.eyebrow}>{t('BONUS CHALLENGE')}</Text>
-          <Text style={s.section}>{t('Five questions. More stars!')}</Text>
+          <Text style={s.section}>{t('Ten questions. More stars!')}</Text>
           <Text style={s.sub}>{t('Put your letter skills to the test.')}</Text>
         </View>
         <Button secondary onPress={() => router.push('/quiz')}>

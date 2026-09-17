@@ -1,13 +1,20 @@
-import { makeQuiz } from '../src/quiz';
+import { makeQuiz, QUIZ_LENGTH } from '../src/quiz';
 import { useLanguage } from '../src/language';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { router } from 'expo-router';
+import { useFonts } from 'expo-font';
 import { Shell, Button, s, colors } from '../src/ui';
 import { groups, lessons } from '../src/data';
 import { useProgress } from '../src/progress';
 export default function Quiz() {
   const { t } = useLanguage();
+  const [fontsLoaded] = useFonts({
+    LessonNaskh: require('../assets/fonts/NotoNaskhArabic-Regular.ttf'),
+  });
+  const arabicFont = fontsLoaded
+    ? { fontFamily: 'LessonNaskh', fontWeight: '400' as const }
+    : undefined;
   const progress = useProgress(),
     [round, setRound] = useState(0),
     [answer, setAnswer] = useState<number | null>(null),
@@ -16,13 +23,16 @@ export default function Quiz() {
     locked = useRef(false);
   const [questions, setQuestions] = useState<ReturnType<typeof makeQuiz>>([]);
   useEffect(() => setQuestions(makeQuiz()), []);
-  const q = questions[round]?.word ?? lessons[0],
-    correct = answer === q.group;
+  const question = questions[round],
+    q = question?.word ?? lessons[0],
+    isImageQuestion = question?.kind === 'image',
+    correct = answer === question?.correctOption,
+    isLastQuestion = round === questions.length - 1;
   function choose(i: number) {
     if (locked.current || !progress.ready || !questions.length) return;
     locked.current = true;
     setAnswer(i);
-    if (i === q.group) {
+    if (i === question.correctOption) {
       setScore((v) => v + 1);
       progress.reward();
     }
@@ -33,7 +43,9 @@ export default function Quiz() {
       <Text style={s.title}>
         {finished
           ? t('Look at you grow!')
-          : t('Which letter starts this word?')}
+          : isImageQuestion
+            ? t('How do you say this in Arabic?')
+            : t('Which letter starts this word?')}
       </Text>
       {finished ? (
         <View
@@ -43,7 +55,9 @@ export default function Quiz() {
           ]}
         >
           <Text style={{ fontSize: 80 }}>🌟</Text>
-          <Text style={s.title}>{t('{score} of 5 discovered', { score })}</Text>
+          <Text style={s.title}>
+            {t('{score} of {total} discovered', { score, total: QUIZ_LENGTH })}
+          </Text>
           <Text style={s.sub}>
             {t('You collected {score} stars. Keep exploring!', { score })}
           </Text>
@@ -66,8 +80,9 @@ export default function Quiz() {
       ) : (
         <>
           <Text style={s.sub}>
-            {t('Question {number} of 5 · {score} stars this round', {
+            {t('Question {number} of {total} · {score} stars this round', {
               number: round + 1,
+              total: QUIZ_LENGTH,
               score,
             })}
           </Text>
@@ -78,29 +93,38 @@ export default function Quiz() {
             ]}
           >
             <Text style={{ fontSize: 100 }}>{q.emoji}</Text>
-            <Text style={s.arabic}>{q.arabic}</Text>
-            <Text style={s.section}>{t(q.english)}</Text>
+            {(!isImageQuestion || answer !== null) && (
+              <>
+                <Text style={[s.arabic, arabicFont]}>{q.arabic}</Text>
+                <Text style={s.section}>{t(q.english)}</Text>
+              </>
+            )}
           </View>
           <View style={s.row}>
             {(questions[round]?.options ?? []).map((groupIndex) => {
-              const letterGroup = groups[groupIndex];
+              const option = isImageQuestion
+                ? lessons[groupIndex]
+                : groups[groupIndex];
+              const optionArabic =
+                'arabic' in option ? option.arabic : option.letter;
+              const optionName = 'name' in option ? option.name : null;
               return (
                 <Pressable
-                  key={letterGroup.name}
+                  key={groupIndex}
                   accessibilityRole="button"
-                  accessibilityLabel={t(letterGroup.name)}
+                  accessibilityLabel={optionName ? t(optionName) : optionArabic}
                   disabled={answer !== null || !progress.ready}
                   onPress={() => choose(groupIndex)}
                   style={[
                     s.card,
                     {
                       flex: 1,
-                      minWidth: 100,
+                      minWidth: isImageQuestion ? 140 : 100,
                       alignItems: 'center',
                       backgroundColor:
                         answer === null
                           ? '#FFF'
-                          : groupIndex === q.group
+                          : groupIndex === question.correctOption
                             ? '#D9ECC5'
                             : answer === groupIndex
                               ? '#F9DBD1'
@@ -110,32 +134,47 @@ export default function Quiz() {
                     },
                   ]}
                 >
-                  <Text style={{ fontSize: 50, color: colors.ink }}>
-                    {letterGroup.letter}
+                  <Text
+                    style={[
+                      {
+                        fontSize: isImageQuestion ? 36 : 50,
+                        color: colors.ink,
+                      },
+                      arabicFont,
+                    ]}
+                  >
+                    {optionArabic}
                   </Text>
-                  <Text style={s.sub}>{t(letterGroup.name)}</Text>
+                  {optionName && <Text style={s.sub}>{t(optionName)}</Text>}
                 </Pressable>
               );
             })}
           </View>
           {answer !== null && (
             <View style={s.card}>
-              <Text accessibilityRole="alert" style={s.section}>
+              <Text
+                accessibilityRole="alert"
+                style={[s.section, !correct && arabicFont]}
+              >
                 {correct
                   ? t('You found it! ★ +1')
-                  : t('Good try! It’s {letter} ({arabic}).', {
-                      letter: t(groups[q.group].name),
-                      arabic: groups[q.group].letter,
-                    })}
+                  : isImageQuestion
+                    ? t('Good try! It’s {arabic}.', { arabic: q.arabic })
+                    : t('Good try! It’s {letter} ({arabic}).', {
+                        letter: t(groups[q.group].name),
+                        arabic: groups[q.group].letter,
+                      })}
               </Text>
               <Text style={s.sub}>
                 {correct
                   ? t('One more little discovery.')
-                  : t('Look at the first letter on the right of the word.')}
+                  : isImageQuestion
+                    ? t('Match the picture to its Arabic word.')
+                    : t('Look at the first letter on the right of the word.')}
               </Text>
               <Button
                 onPress={() => {
-                  if (round === 4) setFinished(true);
+                  if (isLastQuestion) setFinished(true);
                   else {
                     setRound(round + 1);
                     setAnswer(null);
@@ -143,7 +182,7 @@ export default function Quiz() {
                   }
                 }}
               >
-                {round === 4 ? t('See my stars') : t('Next question →')}
+                {isLastQuestion ? t('See my stars') : t('Next question →')}
               </Button>
             </View>
           )}

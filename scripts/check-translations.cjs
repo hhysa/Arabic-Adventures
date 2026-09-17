@@ -67,11 +67,25 @@ const random = () => {
 const covered = new Set();
 for (let i = 0; i < 100; i++) {
   const questions = makeQuiz(random);
-  assert.equal(questions.length, 5);
-  assert.equal(new Set(questions.map((q) => q.word.group)).size, 5);
+  assert.equal(questions.length, 10);
+  assert.equal(questions.filter((q) => q.kind === 'letter').length, 5);
+  assert.equal(questions.filter((q) => q.kind === 'image').length, 5);
+  assert.equal(new Set(questions.map((q) => q.word.group)).size, 10);
   for (const q of questions) {
     assert.equal(new Set(q.options).size, 4);
-    assert.ok(q.options.includes(q.word.group));
+    assert.ok(q.options.includes(q.correctOption));
+    if (q.kind === 'image') {
+      assert.equal(lessons[q.correctOption].id, q.word.id);
+      for (const option of q.options) {
+        assert.ok(lessons[option]);
+        if (option !== q.correctOption) {
+          assert.notEqual(lessons[option].emoji, q.word.emoji);
+          assert.notEqual(lessons[option].arabic, q.word.arabic);
+        }
+      }
+    } else {
+      assert.equal(q.correctOption, q.word.group);
+    }
     covered.add(q.word.group);
   }
 }

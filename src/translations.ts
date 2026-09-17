@@ -1,5 +1,14 @@
 import { alphabetTranslations } from './alphabet-translations';
 export const sq = {
+  'How do you say this in Arabic?': 'Si thuhet kjo në arabisht?',
+  '{score} of {total} discovered': '{score} nga {total} përgjigje të sakta',
+  'Question {number} of {total} · {score} stars this round':
+    'Pyetja {number} nga {total} · {score} yje në këtë raund',
+  'Good try! It’s {arabic}.': 'Përpjekje e mirë! Është {arabic}.',
+  'Match the picture to its Arabic word.':
+    'Lidhe figurën me fjalën e saj në arabisht.',
+  'Ten questions. More stars!': 'Dhjetë pyetje. Më shumë yje!',
+
   Home: 'Kreu',
   Levels: 'Nivelet',
   'YOUR NEXT ADVENTURE STARTS HERE': 'AVENTURA JOTE E RADHËS FILLON KËTU',
