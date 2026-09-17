@@ -3,7 +3,7 @@ export const audio: Record<string, number> = {
   lion: require('../assets/audio/lion.wav'),
   rabbit: require('../assets/audio/rabbit.wav'),
   duck: require('../assets/audio/duck.wav'),
-  door: require('../assets/audio/door.wav'),
+  orange: require('../assets/audio/orange.wav'),
   apple: require('../assets/audio/apple.wav'),
   dates: require('../assets/audio/dates.wav'),
   fox: require('../assets/audio/fox.wav'),
@@ -56,5 +56,4 @@ export const audio: Record<string, number> = {
   face: require('../assets/audio/face.wav'),
   hand: require('../assets/audio/hand.wav'),
   dove: require('../assets/audio/dove.wav'),
-  orange: require('../assets/audio/orange.wav'),
 };

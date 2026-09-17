@@ -21,7 +21,13 @@ export function parseProgress(raw: string): Progress {
   const saved = JSON.parse(raw);
   return {
     completed: Array.isArray(saved.completed)
-      ? saved.completed.filter((id: string) => lessons.some((l) => l.id === id))
+      ? Array.from(
+          new Set<string>(
+            saved.completed
+              .map((id: string) => (id === 'door' ? 'orange' : id))
+              .filter((id: string) => lessons.some((l) => l.id === id)),
+          ),
+        )
       : [],
     days: Array.isArray(saved.days) ? saved.days : [],
     quizStars: Number.isFinite(saved.quizStars) ? saved.quizStars : 0,

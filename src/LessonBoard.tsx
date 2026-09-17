@@ -4,6 +4,7 @@ import Svg, {
   Defs,
   ClipPath,
   Polygon,
+  Path,
   Image as SvgImage,
 } from 'react-native-svg';
 import { groups, VocabularyWord } from './data';
@@ -107,16 +108,18 @@ function WordRow({
   word,
   width,
   onPlay,
+  onColor,
 }: {
   word: VocabularyWord;
   width: number;
   onPlay: (id: string) => void;
+  onColor: (id: string) => void;
 }) {
   const { t } = useLanguage(),
     scale = width / 887,
     label = t('Hear {word} in Arabic', { word: t(word.english) });
   return (
-    <View style={{ height: 565 * scale, position: 'relative' }}>
+    <View style={{ height: 680 * scale + 60, position: 'relative' }}>
       <Text
         pointerEvents="none"
         style={{
@@ -141,10 +144,7 @@ function WordRow({
       >
         🐾
       </Text>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={label}
-        onPress={() => onPlay(word.id)}
+      <View
         style={{
           position: 'absolute',
           left: '24%',
@@ -153,8 +153,61 @@ function WordRow({
           alignItems: 'center',
         }}
       >
-        <Picture word={word} size={width * 0.57} />
-      </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={label}
+          onPress={() => onPlay(word.id)}
+        >
+          <Picture word={word} size={width * 0.57} />
+        </Pressable>
+        <View style={{ flexDirection: 'row', gap: 12, marginTop: 8 }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={label}
+            onPress={() => onPlay(word.id)}
+            style={({ pressed }) => ({
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: pressed ? '#DDEDA9' : '#F3FACD',
+              borderWidth: 1,
+              borderColor: '#8DC63E',
+              alignItems: 'center',
+              justifyContent: 'center',
+            })}
+          >
+            <Svg width={28} height={28} viewBox="0 0 24 24" aria-hidden>
+              <Path d="M11 5 6 9H3v6h3l5 4Z" fill="#48762B" />
+              <Path
+                d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"
+                fill="none"
+                stroke="#48762B"
+                strokeWidth={1.8}
+                strokeLinecap="round"
+              />
+            </Svg>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${t('✎  Let’s color')}: ${t(word.english)}`}
+            onPress={() => onColor(word.id)}
+            style={({ pressed }) => ({
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: pressed ? '#FFE5A1' : '#FFF6D9',
+              borderWidth: 1,
+              borderColor: '#DBA844',
+              alignItems: 'center',
+              justifyContent: 'center',
+            })}
+          >
+            <Text aria-hidden style={{ fontSize: 28 }}>
+              🎨
+            </Text>
+          </Pressable>
+        </View>
+      </View>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={label}
@@ -169,7 +222,7 @@ function WordRow({
         importantForAccessibility="no-hide-descendants"
         style={{
           position: 'absolute',
-          left: '4%',
+          left: '0%',
           bottom: 4 * scale,
           opacity: 0.75,
         }}
@@ -201,11 +254,13 @@ export function LessonBoard({
   words,
   width,
   onPlay,
+  onColor,
 }: {
   group: number;
   words: VocabularyWord[];
   width: number;
   onPlay: (id: string) => void;
+  onColor: (id: string) => void;
 }) {
   const { t, language } = useLanguage(),
     g = groups[group],
@@ -314,6 +369,7 @@ export function LessonBoard({
           word={word}
           width={width - 24 * scale}
           onPlay={onPlay}
+          onColor={onColor}
         />
       ))}
       <View

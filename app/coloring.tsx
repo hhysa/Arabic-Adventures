@@ -23,7 +23,7 @@ const paintNames: Record<string, string> = {
 export default function Coloring() {
   const { t } = useLanguage();
   const { id } = useLocalSearchParams<{ id: string }>(),
-    lesson = lessons.find((l) => l.id === id) ?? lessons[0],
+    lesson = [...lessons].find((l) => l.id === id) ?? lessons[0],
     [color, setColor] = useState('#E98B38'),
     [strokes, setStrokes] = useState<Stroke[]>([]),
     [drawing, setDrawing] = useState(false),

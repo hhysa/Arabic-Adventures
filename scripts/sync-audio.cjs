@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const { load } = require('./load-typescript.cjs');
-const { lessons, bonusOrange } = load('src/data.ts');
-const words = [...lessons, bonusOrange];
+const { lessons } = load('src/data.ts');
+const words = [...lessons];
 fs.writeFileSync(
   'assets/audio/words.json',
   JSON.stringify(

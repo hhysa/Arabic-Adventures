@@ -10,6 +10,12 @@ const {
   localDay,
 } = load('src/progress-model.ts');
 const now = new Date(2026, 8, 11, 12);
+assert.deepEqual(
+  parseProgress(JSON.stringify({ completed: ['duck', 'door', 'orange'] }))
+    .completed,
+  ['duck', 'orange'],
+  'Replacing door preserves completion without duplicate rewards',
+);
 const today = localDay(now),
   yesterday = localDay(new Date(2026, 8, 10, 12));
 let progress = completeLesson(emptyProgress, 'duck', today);

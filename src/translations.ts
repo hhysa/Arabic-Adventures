@@ -104,7 +104,7 @@ export const sq = {
   'Your three stars are saved.': 'Tre yjet e tu u ruajtën.',
   'Finish this lesson to collect three stars.':
     'Përfundo këtë mësim për të mbledhur tre yje.',
-  'Next word →': 'Fjala tjetër →',
+  'Next letter →': 'Shkronja tjetër →',
   'I learned this word!  ★ +3': 'E mësova këtë fjalë!  ★ +3',
   'A LITTLE BRAIN ADVENTURE': 'NJË AVENTURË E VOGËL PËR MENDJEN',
   'Look at you grow!': 'Shiko sa ke mësuar!',

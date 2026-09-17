@@ -3,8 +3,8 @@ const fs = require('node:fs');
 const ts = require('typescript');
 const { load } = require('./load-typescript.cjs');
 const { sq, translate } = load('src/translations.ts');
-const { groups, lessons, bonusOrange } = load('src/data.ts');
-const allWords = [...lessons, bonusOrange];
+const { groups, lessons } = load('src/data.ts');
+const allWords = [...lessons];
 const manifest = JSON.parse(fs.readFileSync('assets/audio/words.json', 'utf8'));
 assert.deepEqual(
   manifest,
@@ -46,7 +46,7 @@ for (const id of [
   'lion',
   'rabbit',
   'duck',
-  'door',
+  'orange',
   'apple',
   'dates',
   'fish',

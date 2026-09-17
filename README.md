@@ -1,6 +1,6 @@
 # Arabic Adventures
 
-Arabic Adventures is a React Native / Expo learning app for children starting Arabic. It contains all 28 letters in alphabetical order, two vocabulary lessons per letter, and a bonus orange word on the Baa board. Albanian is the default interface language; English is available from the language switcher. Arabic text and pronunciation do not change with the interface language.
+Arabic Adventures is a React Native / Expo learning app for children starting Arabic. It contains all 28 letters in alphabetical order, two vocabulary lessons per letter. Albanian is the default interface language; English is available from the language switcher. Arabic text and pronunciation do not change with the interface language.
 
 This guide is for the developer taking over the project. Start with the setup below, then read `src/data.ts`, `app/_layout.tsx`, and one lesson route to understand the main flow.
 
@@ -48,7 +48,7 @@ The native app bundles images and audio and saves progress locally. The web expo
 | `app/quiz.tsx`                 | Five-question round, answer feedback, rewards and replay.                                                                        |
 | `app/progress.tsx`             | Completed words and aggregate progress.                                                                                          |
 | `app/+html.tsx`                | Default Albanian document language and web metadata.                                                                             |
-| `src/data.ts`                  | Typed letter groups, vocabulary objects, derived flat lesson list, bonus orange word.                                            |
+| `src/data.ts`                  | Typed letter groups, vocabulary objects, derived flat lesson list.                                                               |
 | `src/LessonBoard.tsx`          | Shared reference-inspired poster presentation and artwork masks.                                                                 |
 | `src/ui.tsx`                   | Shared shell, button, colors and common styles. The lesson route has its own minimal frame.                                      |
 | `src/LanguageSwitcher.tsx`     | The single language selector used by both screen frames.                                                                         |
@@ -74,7 +74,7 @@ Keep this structure small. Screens own their interaction state; shared modules c
 4. Completing a word records that ID and awards three stars once. Reopening or completing it again does not award another three stars.
 5. The next-word action follows the flat catalog order. The home screen recommends the first unfinished word, returning to the first word when all are complete.
 
-Baa deliberately has a presentation exception: its first board pairs duck with the bonus orange to match the supplied reference. The door lesson remains selectable below the board. Orange is not a separate completion target and does not increase the 56-lesson total.
+Baa has two vocabulary lessons: duck and orange, matching the supplied reference. Both count toward completion within the 56-lesson total.
 
 ### Arabic rendering and artwork
 

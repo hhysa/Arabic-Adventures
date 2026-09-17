@@ -11,7 +11,7 @@ export type LetterGroup = {
   // Isolated, beginning, middle, ending. Keep this order for the lesson board.
   forms: [string, string, string, string];
   color: string;
-  words: VocabularyWord[];
+  words: [VocabularyWord, VocabularyWord];
 };
 export type Lesson = VocabularyWord & { group: number };
 
@@ -52,11 +52,11 @@ export const groups: LetterGroup[] = [
         emoji: '🦆',
       },
       {
-        id: 'door',
-        arabic: 'بَاب',
-        english: 'Door',
-        say: 'baab',
-        emoji: '🚪',
+        id: 'orange',
+        arabic: 'بُرْتُقَال',
+        english: 'Orange',
+        say: 'burtuqaal',
+        emoji: '🍊',
       },
     ],
   },
@@ -636,10 +636,3 @@ export const groups: LetterGroup[] = [
 export const lessons: Lesson[] = groups.flatMap((g, group) =>
   g.words.map((word) => ({ ...word, group })),
 );
-export const bonusOrange: VocabularyWord = {
-  id: 'orange',
-  arabic: 'بُرْتُقَال',
-  english: 'Orange',
-  say: 'burtuqaal',
-  emoji: '🍊',
-};

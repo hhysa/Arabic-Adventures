@@ -19,7 +19,7 @@ assert.ok(
   getLevels(lessons.map((word) => word.id)).every((level) => level.complete),
 );
 assert.equal(
-  getLevels(['duck', 'door'])[1].complete,
+  getLevels(['duck', 'orange'])[1].complete,
   true,
   'Existing nonsequential progress must carry over',
 );

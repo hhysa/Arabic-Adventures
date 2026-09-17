@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useAudioPlayer } from 'expo-audio';
-import { Button, s, colors } from '../../src/ui';
-import { groups, lessons, bonusOrange } from '../../src/data';
+import { Button, s } from '../../src/ui';
+import { groups, lessons } from '../../src/data';
 import { useProgress } from '../../src/progress';
 import { useLanguage } from '../../src/language';
 import { audio } from '../../src/audio';
@@ -37,12 +37,7 @@ export default function Lesson() {
     );
   const letterGroup = groups[lesson.group],
     done = progress.completed.includes(lesson.id),
-    next = lessons[(lessons.indexOf(lesson) + 1) % lessons.length];
-  const groupWords = lessons.filter((word) => word.group === lesson.group);
-  const words =
-    letterGroup.letter === 'ب'
-      ? [lesson.id === 'door' ? lesson : groupWords[0], bonusOrange]
-      : groupWords;
+    next = groups[(lesson.group + 1) % groups.length].words[0];
   const levelDone = letterGroup.words.every((word) =>
     progress.completed.includes(word.id),
   );
@@ -84,9 +79,10 @@ export default function Lesson() {
         </View>
         <LessonBoard
           group={lesson.group}
-          words={words}
+          words={letterGroup.words}
           width={boardWidth}
           onPlay={play}
+          onColor={(wordId) => router.push(`/coloring?id=${wordId}`)}
         />
         <View
           style={{
@@ -96,26 +92,11 @@ export default function Lesson() {
             paddingHorizontal: 8,
           }}
         >
-          <Text style={[s.sub, { textAlign: 'center' }]}>
-            {t('Tap a picture or word to hear it in Arabic.')}
-          </Text>
           {error || progress.error || languageError ? (
             <Text accessibilityRole="alert">
               {t(error || progress.error || languageError)}
             </Text>
           ) : null}
-          <View style={[s.row, { justifyContent: 'center' }]}>
-            {letterGroup.words.map((word) => (
-              <Button
-                key={word.id}
-                secondary={lesson.id !== word.id}
-                onPress={() => router.replace(`/lesson/${word.id}`)}
-              >
-                {t(word.english)}{' '}
-                {progress.completed.includes(word.id) ? '✓' : ''}
-              </Button>
-            ))}
-          </View>
           {'أدذرزو'.includes(letterGroup.letter) && (
             <Text style={s.sub}>
               {t(
@@ -123,17 +104,6 @@ export default function Lesson() {
               )}
             </Text>
           )}
-          <View style={[s.row, { justifyContent: 'center' }]}>
-            <Button secondary onPress={() => play(lesson.id)}>
-              {t('♫  Listen to the word')}
-            </Button>
-            <Button
-              secondary
-              onPress={() => router.push(`/coloring?id=${lesson.id}`)}
-            >
-              {t('✎  Let’s color')}
-            </Button>
-          </View>
           <Text
             accessibilityRole="alert"
             style={[s.sub, { textAlign: 'center' }]}
@@ -168,7 +138,7 @@ export default function Lesson() {
               else router.replace(`/lesson/${next.id}`);
             }}
           >
-            {done ? t('Next word →') : t('I learned this word!  ★ +3')}
+            {done ? t('Next letter →') : t('I learned this word!  ★ +3')}
           </Button>
         </View>
       </ScrollView>
