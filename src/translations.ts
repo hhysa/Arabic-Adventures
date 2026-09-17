@@ -116,7 +116,6 @@ export const sq = {
   'Next letter →': 'Shkronja tjetër →',
   'MashaAllah!': 'MashaAllah!',
   'Keep practicing': 'Vazhdo të praktikosh',
-  'Your progress is saved.': 'Përparimi yt u ruajt.',
   'Finish both words to complete this letter.':
     'Përfundo të dyja fjalët për të përfunduar këtë shkronjë.',
   'I learned this letter!': 'E mësova këtë shkronjë!',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { useFonts } from 'expo-font';
+import { arabicFont } from './typography';
 import Svg, {
   Defs,
   ClipPath,
@@ -57,13 +57,11 @@ function JoinedWord({
   word,
   width,
   fontSize,
-  fontFamily,
   ghost = false,
 }: {
   word: string;
   width: number;
   fontSize: number;
-  fontFamily?: string;
   ghost?: boolean;
 }) {
   // Inline Text shares one Arabic shaping run. Keep the first letter's vowel
@@ -77,8 +75,7 @@ function JoinedWord({
         height: fontSize * 1.7,
         fontSize,
         lineHeight: fontSize * 1.7,
-        fontFamily,
-        fontWeight: fontFamily ? '400' : '700',
+        ...arabicFont,
         textAlign: 'right',
         writingDirection: 'rtl',
         color: ghost ? '#C7CEAF' : '#48762B',
@@ -99,13 +96,11 @@ function JoinedWord({
 function WordRow({
   word,
   width,
-  fontFamily,
   onPlay,
   onColor,
 }: {
   word: VocabularyWord;
   width: number;
-  fontFamily?: string;
   onPlay: (id: string) => void;
   onColor: (id: string) => void;
 }) {
@@ -223,7 +218,6 @@ function WordRow({
       >
         <JoinedWord
           word={word.arabic}
-          fontFamily={fontFamily}
           width={width * 0.41}
           fontSize={word.arabic.length > 10 ? 65 * scale : 83 * scale}
           ghost
@@ -237,7 +231,6 @@ function WordRow({
       >
         <JoinedWord
           word={word.arabic}
-          fontFamily={fontFamily}
           width={width * 0.48}
           fontSize={word.arabic.length > 10 ? 73 * scale : 94 * scale}
         />
@@ -261,9 +254,6 @@ export function LessonBoard({
   const { t, language } = useLanguage(),
     g = groups[group],
     scale = width / 887;
-  const [fontsLoaded] = useFonts({
-    LessonNaskh: require('../assets/fonts/NotoNaskhArabic-Regular.ttf'),
-  });
   return (
     <View
       style={{
@@ -302,7 +292,7 @@ export function LessonBoard({
               >
                 <Text
                   style={{
-                    fontFamily: fontsLoaded ? 'LessonNaskh' : undefined,
+                    ...arabicFont,
                     fontSize: 44 * scale,
                     lineHeight: 66 * scale,
                     textAlign: 'center',
@@ -333,8 +323,7 @@ export function LessonBoard({
           minimumFontScale={0.5}
           style={{
             maxWidth: width * 0.24,
-            fontFamily: 'serif',
-            fontWeight: '700',
+            ...arabicFont,
             fontSize: (t(g.name).length > 5 ? 37 : 67) * scale,
             color: '#8CC63E',
             paddingTop: 20 * scale,
@@ -358,7 +347,7 @@ export function LessonBoard({
             accessibilityLabel={t('On its own')}
             style={{
               fontSize: 85 * scale,
-              fontFamily: fontsLoaded ? 'LessonNaskh' : undefined,
+              ...arabicFont,
               color: '#F2F6D8',
               writingDirection: 'rtl',
             }}
@@ -371,7 +360,6 @@ export function LessonBoard({
         <WordRow
           key={word.id}
           word={word}
-          fontFamily={fontsLoaded ? 'LessonNaskh' : undefined}
           width={width - 24 * scale}
           onPlay={onPlay}
           onColor={onColor}

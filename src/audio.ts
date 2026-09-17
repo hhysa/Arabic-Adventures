@@ -33,7 +33,7 @@ export const audio: Record<string, number> = {
   airplane: require('../assets/audio/airplane.wav'),
   drum: require('../assets/audio/drum.wav'),
   envelope: require('../assets/audio/envelope.wav'),
-  fingernail: require('../assets/audio/fingernail.wav'),
+  zaby: require('../assets/audio/zaby.wav'),
   eye: require('../assets/audio/eye.wav'),
   grapes: require('../assets/audio/grapes.wav'),
   gazelle: require('../assets/audio/gazelle.wav'),

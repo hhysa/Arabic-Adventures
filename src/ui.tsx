@@ -1,5 +1,6 @@
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from './language';
+import { arabicFont } from './typography';
 import React from 'react';
 import {
   View,
@@ -249,6 +250,7 @@ export const s = StyleSheet.create({
     marginTop: 42,
   },
   arabic: {
+    ...arabicFont,
     fontSize: 64,
     color: colors.ink,
     textAlign: 'center',

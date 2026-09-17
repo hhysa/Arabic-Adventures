@@ -50,7 +50,6 @@ export const alphabetTranslations = {
   Drum: 'Daulle',
   'Dhaa emphatic': 'Dha (ظ)',
   Envelope: 'Zarf',
-  Fingernail: 'Thua',
   Ayn: 'Ajn',
   Eye: 'Sy',
   Grapes: 'Rrush',

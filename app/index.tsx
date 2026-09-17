@@ -1,3 +1,4 @@
+import { arabicFont } from '../src/typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
@@ -24,7 +25,7 @@ export default function Home() {
           >
             ✦
           </Text>
-          <Text style={{ fontSize: 105, color: '#365C36' }}>
+          <Text style={[arabicFont, { fontSize: 105, color: '#365C36' }]}>
             {current?.group.letter ?? '★'}
           </Text>
           <Text
@@ -61,7 +62,7 @@ export default function Home() {
             {t('Explore the level map')}
           </Button>
         </View>
-        <Text style={{ fontSize: 14, color: '#567346', fontWeight: '700' }}>
+        <Text style={[{ fontSize: 14, color: '#567346' }, arabicFont]}>
           {current
             ? t('Next stop: level {number} · {letter}', {
                 number: current.number,

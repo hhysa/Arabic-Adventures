@@ -3,18 +3,12 @@ import { useLanguage } from '../src/language';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { router } from 'expo-router';
-import { useFonts } from 'expo-font';
+import { arabicFont } from '../src/typography';
 import { Shell, Button, s, colors } from '../src/ui';
 import { groups, lessons } from '../src/data';
 import { useProgress } from '../src/progress';
 export default function Quiz() {
   const { t } = useLanguage();
-  const [fontsLoaded] = useFonts({
-    LessonNaskh: require('../assets/fonts/NotoNaskhArabic-Regular.ttf'),
-  });
-  const arabicFont = fontsLoaded
-    ? { fontFamily: 'LessonNaskh', fontWeight: '400' as const }
-    : undefined;
   const progress = useProgress(),
     [round, setRound] = useState(0),
     [answer, setAnswer] = useState<number | null>(null),
@@ -145,7 +139,9 @@ export default function Quiz() {
                   >
                     {optionArabic}
                   </Text>
-                  {optionName && <Text style={s.sub}>{t(optionName)}</Text>}
+                  {optionName && (
+                    <Text style={[s.sub, arabicFont]}>{t(optionName)}</Text>
+                  )}
                 </Pressable>
               );
             })}

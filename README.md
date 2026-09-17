@@ -115,7 +115,7 @@ The checks intentionally assert the current 28-letter / 56-lesson scope. If a pr
 
 ### Generate pronunciation files on Windows
 
-The vocabulary recordings were generated with the installed Microsoft Naayf Arabic voice. The separate `assets/audio/MashaAllah.mp3` celebration clip was synthesized from “مَا شَاءَ اللَّهُ” using Google Translate’s Arabic speech service and is bundled locally; playback makes no request to that service. Generation is an optional contributor tool; end users do not need that voice installed.
+The vocabulary recordings were generated with the installed Microsoft Naayf Arabic voice, except `assets/audio/zaby.wav`, synthesized from “ظَبْي” using Google Translate’s Arabic speech service and converted to PCM WAV. The separate `assets/audio/MashaAllah.mp3` celebration clip was synthesized from “مَا شَاءَ اللَّهُ” using Google Translate’s Arabic speech service and is bundled locally; playback makes no request to that service. Generation is an optional contributor tool; end users do not need that voice installed.
 
 ```powershell
 npm run audio:sync

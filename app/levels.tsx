@@ -1,3 +1,4 @@
+import { arabicFont } from '../src/typography';
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
@@ -99,6 +100,7 @@ export default function Levels() {
                 >
                   <Text
                     style={{
+                      ...arabicFont,
                       fontSize: 49,
                       color: isCurrent ? '#FFF' : colors.ink,
                     }}
@@ -120,7 +122,7 @@ export default function Levels() {
                 <Text
                   style={{
                     fontSize: 17,
-                    fontWeight: '800',
+                    ...arabicFont,
                     color: colors.ink,
                   }}
                 >

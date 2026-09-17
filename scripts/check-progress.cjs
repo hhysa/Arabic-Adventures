@@ -11,6 +11,13 @@ const {
 } = load('src/progress-model.ts');
 const now = new Date(2026, 8, 11, 12);
 assert.deepEqual(
+  parseProgress(
+    JSON.stringify({ completed: ['envelope', 'fingernail', 'back', 'zaby'] }),
+  ).completed,
+  ['envelope', 'zaby'],
+  'Replacing fingernail and back preserves completion without duplicate rewards',
+);
+assert.deepEqual(
   parseProgress(JSON.stringify({ completed: ['duck', 'door', 'orange'] }))
     .completed,
   ['duck', 'orange'],

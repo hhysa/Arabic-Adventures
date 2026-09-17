@@ -132,14 +132,11 @@ export default function Lesson() {
               )}
             </Text>
           )}
-          <Text
-            accessibilityRole="alert"
-            style={[s.sub, { textAlign: 'center' }]}
-          >
-            {levelDone
-              ? t('Your progress is saved.')
-              : t('Finish both words to complete this letter.')}
-          </Text>
+          {!levelDone && (
+            <Text style={[s.sub, { textAlign: 'center' }]}>
+              {t('Finish both words to complete this letter.')}
+            </Text>
+          )}
           <Button
             disabled={!progress.ready}
             onPress={levelDone ? nextLetter : finishLetter}

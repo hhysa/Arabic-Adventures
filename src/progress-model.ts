@@ -24,7 +24,13 @@ export function parseProgress(raw: string): Progress {
       ? Array.from(
           new Set<string>(
             saved.completed
-              .map((id: string) => (id === 'door' ? 'orange' : id))
+              .map((id: string) =>
+                id === 'door'
+                  ? 'orange'
+                  : id === 'fingernail' || id === 'back'
+                    ? 'zaby'
+                    : id,
+              )
               .filter((id: string) => lessons.some((l) => l.id === id)),
           ),
         )

@@ -1,3 +1,4 @@
+import { arabicFont } from '../src/typography';
 import { useLanguage } from '../src/language';
 import React from 'react';
 import { View, Text } from 'react-native';
@@ -34,10 +35,10 @@ export default function Progress() {
       {groups.map((letterGroup) => (
         <View key={t(letterGroup.name)} style={s.card}>
           <View style={s.row}>
-            <Text style={{ fontSize: 40, color: colors.green }}>
+            <Text style={[arabicFont, { fontSize: 40, color: colors.green }]}>
               {letterGroup.letter}
             </Text>
-            <Text style={s.section}>{t(letterGroup.name)}</Text>
+            <Text style={[s.section, arabicFont]}>{t(letterGroup.name)}</Text>
           </View>
           {letterGroup.words.map((word) => (
             <View
@@ -45,7 +46,8 @@ export default function Progress() {
               style={[s.row, { justifyContent: 'space-between' }]}
             >
               <Text style={{ fontSize: 17, color: colors.ink }}>
-                {word.emoji} {t(word.english)} · {word.arabic}
+                {word.emoji} {t(word.english)} ·{' '}
+                <Text style={arabicFont}>{word.arabic}</Text>
               </Text>
               <Button
                 secondary
