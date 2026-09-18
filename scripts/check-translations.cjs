@@ -4,6 +4,7 @@ const ts = require('typescript');
 const { load } = require('./load-typescript.cjs');
 const { sq, translate } = load('src/translations.ts');
 const { groups, lessons } = load('src/data.ts');
+const { arabicColors } = load('src/color-data.ts');
 const allWords = [...lessons];
 const manifest = JSON.parse(fs.readFileSync('assets/audio/words.json', 'utf8'));
 assert.deepEqual(
@@ -102,6 +103,7 @@ for (const [english, albanian] of Object.entries(sq)) {
 }
 for (const word of [
   ...lessons.map((lesson) => lesson.english),
+  ...arabicColors.map((color) => color.english),
   ...groups.map((group) => group.name),
   'Orange',
 ]) {
@@ -117,6 +119,8 @@ const files = [
   'app/quiz.tsx',
   'app/progress.tsx',
   'app/coloring.tsx',
+  'app/colors.tsx',
+  'app/numbers.tsx',
 ];
 for (const file of files) {
   const source = ts.createSourceFile(

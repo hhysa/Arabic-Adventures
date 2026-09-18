@@ -1,0 +1,23 @@
+// Standalone counting forms, paired only with European numerals.
+export const arabicNumbers = [
+  { value: 1, arabic: 'وَاحِد' },
+  { value: 2, arabic: 'اِثْنَان' },
+  { value: 3, arabic: 'ثَلَاثَة' },
+  { value: 4, arabic: 'أَرْبَعَة' },
+  { value: 5, arabic: 'خَمْسَة' },
+  { value: 6, arabic: 'سِتَّة' },
+  { value: 7, arabic: 'سَبْعَة' },
+  { value: 8, arabic: 'ثَمَانِيَة' },
+  { value: 9, arabic: 'تِسْعَة' },
+  { value: 10, arabic: 'عَشَرَة' },
+  { value: 20, arabic: 'عِشْرُون' },
+  { value: 30, arabic: 'ثَلَاثُون' },
+  { value: 40, arabic: 'أَرْبَعُون' },
+  { value: 50, arabic: 'خَمْسُون' },
+  { value: 60, arabic: 'سِتُّون' },
+  { value: 70, arabic: 'سَبْعُون' },
+  { value: 80, arabic: 'ثَمَانُون' },
+  { value: 90, arabic: 'تِسْعُون' },
+  { value: 100, arabic: 'مِئَة' },
+  { value: 1000, arabic: 'أَلْف' },
+];

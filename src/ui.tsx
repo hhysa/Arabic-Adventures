@@ -114,6 +114,7 @@ export function Shell({
         {[
           ['/', '⌂', t('Home')],
           ['/levels', '⚑', t('Levels')],
+          ['/colors', '◉', t('Colors')],
           ['/quiz', '✦', t('Quiz')],
           ['/progress', '◷', t('My progress')],
         ].map(([href, icon, label]) => (
@@ -124,7 +125,7 @@ export function Shell({
             onPress={() => router.push(href as any)}
             style={[
               s.navItem,
-              { paddingHorizontal: width < 600 ? 10 : 20 },
+              { paddingHorizontal: width < 600 ? 5 : 20, flexShrink: 1 },
               path === href && { backgroundColor: '#E7EFD9' },
             ]}
           >
@@ -138,7 +139,8 @@ export function Shell({
             </Text>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: width < 600 ? 11 : 14,
+                textAlign: 'center',
                 fontWeight: '700',
                 color: path === href ? colors.green : colors.muted,
               }}

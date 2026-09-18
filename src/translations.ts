@@ -1,5 +1,8 @@
+import { colorTranslations } from './color-translations';
 import { alphabetTranslations } from './alphabet-translations';
 export const sq = {
+  ...colorTranslations,
+  Numbers: 'Numrat',
   'How do you say this in Arabic?': 'Si thuhet kjo në arabisht?',
   '{score} of {total} discovered': '{score} nga {total} përgjigje të sakta',
   'Question {number} of {total} · {score} stars this round':
