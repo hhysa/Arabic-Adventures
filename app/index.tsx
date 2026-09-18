@@ -94,27 +94,24 @@ export default function Home() {
       </View>
       <View style={[s.card, { backgroundColor: '#F2EAFB' }]}>
         <Text style={s.eyebrow}>{t('Colors')}</Text>
-        <Text style={s.section}>{t('30 colors. A rainbow of new words.')}</Text>
+        <Text style={s.section}>{t('Colors. A rainbow of new words.')}</Text>
         <Text style={s.sub}>
           {t(
             'Learn each color’s Arabic name and practice matching it to a swatch.',
           )}
         </Text>
         <Button onPress={() => router.push('/colors')}>
-          {t('Explore 30 colors →')}
+          {t('Explore colors →')}
         </Button>
       </View>
       <View style={[s.card, { backgroundColor: '#EDF5FC' }]}>
-        <Text style={[s.title, { textAlign: 'center', fontSize: 40 }]}>
-          {t('Numbers')}
-        </Text>
-        <Text style={[s.section, { textAlign: 'center' }]}>
-          1 · 2 · 3 · 10 · 100 · 1000
+        <Text style={s.eyebrow}>{t('Numbers')}</Text>
+        <Text style={s.section}>{t('Numbers. Every number has a name.')}</Text>
+        <Text style={s.sub}>
+          {t('Discover Arabic numbers and tap each card to hear its name.')}
         </Text>
         <Button onPress={() => router.push('/numbers')}>
-          <Text style={[arabicFont, { fontSize: 24 }]}>
-            تَعَلَّمِ الْأَعْدَاد ←
-          </Text>
+          {t('Explore numbers →')}
         </Button>
       </View>
       <View

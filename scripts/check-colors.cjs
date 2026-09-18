@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const { load } = require('./load-typescript.cjs');
 const { arabicColors } = load('src/color-data.ts');
 const { makeColorQuiz } = load('src/color-quiz.ts');
@@ -10,6 +11,30 @@ for (const color of arabicColors) {
   assert.match(color.hex, /^#[0-9A-F]{6}$/i);
   assert.match(color.arabic, /[\u0621-\u064A]/);
   assert.ok(color.say.trim());
+}
+const manifest = JSON.parse(
+  fs.readFileSync('assets/audio/colors/words.json', 'utf8'),
+);
+assert.deepEqual(
+  manifest,
+  Object.fromEntries(arabicColors.map((color) => [color.id, color.arabic])),
+);
+const imports = [
+  ...fs
+    .readFileSync('src/color-audio.ts', 'utf8')
+    .matchAll(
+      /require\(['"]\.\.\/assets\/audio\/colors\/([^'"/]+)\.mp3['"]\)/g,
+    ),
+].map((match) => match[1]);
+assert.deepEqual(imports.sort(), arabicColors.map((color) => color.id).sort());
+for (const color of arabicColors) {
+  const audio = fs.readFileSync(`assets/audio/colors/${color.id}.mp3`);
+  assert.ok(audio.length > 1000, `Missing color audio: ${color.id}`);
+  assert.ok(
+    audio.subarray(0, 3).toString() === 'ID3' ||
+      (audio[0] === 0xff && (audio[1] & 0xe0) === 0xe0),
+    `Invalid MP3: ${color.id}`,
+  );
 }
 let seed = 41;
 const random = () => {

@@ -2,17 +2,15 @@ export const colorTranslations = {
   'Question {number} of {total}': 'Pyetja {number} nga {total}',
   Colors: 'Ngjyrat',
   'Arabic colors': 'Ngjyrat në arabisht',
-  'Explore 30 colors →': 'Zbulo 30 ngjyra →',
-  '30 colors. A rainbow of new words.':
-    '30 ngjyra. Një ylber me fjalë të reja.',
+  'Explore colors →': 'Zbulo ngjyra →',
+  'Colors. A rainbow of new words.': 'Ngjyrat. Një ylber me fjalë të reja.',
   'Learn each color’s Arabic name and practice matching it to a swatch.':
     'Mëso emrin e çdo ngjyre në arabisht dhe ushtrohu duke e lidhur me ngjyrën përkatëse.',
   'Learn colors': 'Mëso ngjyrat',
   'Practice colors': 'Ushtro ngjyrat',
-  'Color names use the masculine singular form. Pronunciation guides are approximate.':
-    'Emrat e ngjyrave përdorin formën mashkullore në njëjës. Udhëzimet e shqiptimit janë të përafërta.',
-  'Light = فَاتِح (faatih) · Dark = دَاكِن (daakin)':
-    'E çelët = فَاتِح (faatih) · E errët = دَاكِن (daakin)',
+  'Color names use the masculine singular form.':
+    'Emrat e ngjyrave përdorin formën mashkullore në njëjës.',
+  'Light = فَاتِح · Dark = دَاكِن': 'E çelët = فَاتِح · E errët = دَاكِن',
   'Match the Arabic name to a color.': 'Lidhe emrin në arabisht me një ngjyrë.',
   'Color option {number}': 'Zgjedhja e ngjyrës {number}',
   'Correct!': 'Saktë!',

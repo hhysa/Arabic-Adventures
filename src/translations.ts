@@ -3,6 +3,10 @@ import { alphabetTranslations } from './alphabet-translations';
 export const sq = {
   ...colorTranslations,
   Numbers: 'Numrat',
+  'Numbers. Every number has a name.': 'Numrat. Çdo numër ka një emër.',
+  'Discover Arabic numbers and tap each card to hear its name.':
+    'Zbulo numrat në arabisht dhe prek çdo kartë për të dëgjuar emrin e tij.',
+  'Explore numbers →': 'Zbulo numrat →',
   'How do you say this in Arabic?': 'Si thuhet kjo në arabisht?',
   '{score} of {total} discovered': '{score} nga {total} përgjigje të sakta',
   'Question {number} of {total} · {score} stars this round':

@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
+import { colorAudio } from '../src/color-audio';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Shell, Button, s, colors } from '../src/ui';
 import { useLanguage } from '../src/language';
 import { arabicColors } from '../src/color-data';
 import { makeColorQuiz } from '../src/color-quiz';
 import { arabicFont } from '../src/typography';
+import { SpeakerIcon } from '../src/SpeakerIcon';
 
 export default function Colors() {
   const { t } = useLanguage();
+  const player = useAudioPlayer(null);
+  const playerStatus = useAudioPlayerStatus(player);
+  const [audioError, setAudioError] = useState(false);
+  useFocusEffect(useCallback(() => () => player.pause(), [player]));
+
+  function playColor(id: string) {
+    try {
+      player.pause();
+      player.replace(colorAudio[id]);
+      player.play();
+      setAudioError(false);
+    } catch {
+      setAudioError(true);
+    }
+  }
+
   const [questions, setQuestions] = useState<ReturnType<typeof makeColorQuiz>>(
     [],
   );
@@ -19,6 +39,7 @@ export default function Colors() {
   const practicing = questions.length > 0;
 
   function startPractice() {
+    player.pause();
     setQuestions(makeColorQuiz());
     setIndex(0);
     setScore(0);
@@ -36,7 +57,13 @@ export default function Colors() {
           )}
         </Text>
         <View style={s.row}>
-          <Button secondary={practicing} onPress={() => setQuestions([])}>
+          <Button
+            secondary={practicing}
+            onPress={() => {
+              player.pause();
+              setQuestions([]);
+            }}
+          >
             {t('Learn colors')}
           </Button>
           <Button secondary={!practicing} onPress={startPractice}>
@@ -44,27 +71,45 @@ export default function Colors() {
           </Button>
         </View>
       </View>
+      {audioError || playerStatus.error ? (
+        <Text accessibilityRole="alert">
+          {t('Audio could not play. Please try again.')}
+        </Text>
+      ) : null}
       {!practicing ? (
         <>
           <Text style={s.sub}>
-            {t(
-              'Color names use the masculine singular form. Pronunciation guides are approximate.',
-            )}
+            {t('Color names use the masculine singular form.')}
           </Text>
           <Text style={[s.sub, arabicFont]}>
-            {t('Light = فَاتِح (faatih) · Dark = دَاكِن (daakin)')}
+            {t('Light = فَاتِح · Dark = دَاكِن')}
           </Text>
           <View style={styles.grid}>
             {arabicColors.map((color) => (
-              <View key={color.id} style={[s.card, styles.card]}>
+              <Pressable
+                key={color.id}
+                accessibilityRole="button"
+                accessibilityLabel={t('Hear {word} in Arabic', {
+                  word: t(color.english),
+                })}
+                onPress={() => playColor(color.id)}
+                style={({ pressed }) => [
+                  s.card,
+                  styles.card,
+                  { opacity: pressed ? 0.75 : 1 },
+                ]}
+              >
                 <View
                   aria-hidden
                   style={[styles.swatch, { backgroundColor: color.hex }]}
-                />
+                >
+                  <View style={[styles.speaker, styles.swatchSpeaker]}>
+                    <SpeakerIcon />
+                  </View>
+                </View>
                 <Text style={[s.arabic, styles.arabic]}>{color.arabic}</Text>
-                <Text style={styles.pronunciation}>{color.say}</Text>
                 <Text style={styles.label}>{t(color.english)}</Text>
-              </View>
+              </Pressable>
             ))}
           </View>
         </>
@@ -83,7 +128,17 @@ export default function Colors() {
           <Text style={[s.arabic, { fontSize: 48 }]}>
             {question.color.arabic}
           </Text>
-          <Text style={styles.pronunciation}>{question.color.say}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('♫  Listen to the word')}
+            onPress={() => playColor(question.color.id)}
+            style={({ pressed }) => [
+              styles.speaker,
+              { alignSelf: 'center', opacity: pressed ? 0.75 : 1 },
+            ]}
+          >
+            <SpeakerIcon />
+          </Pressable>
           <View style={styles.grid}>
             {question.options.map((option, optionIndex) => {
               const selected = attempts.includes(option.id);
@@ -144,6 +199,7 @@ export default function Colors() {
           <Button
             disabled={!correct}
             onPress={() => {
+              player.pause();
               setIndex((value) => value + 1);
               setAttempts([]);
             }}
@@ -173,14 +229,25 @@ const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
   card: { flexGrow: 1, flexBasis: 220, alignItems: 'center', padding: 18 },
   swatch: {
-    width: '100%',
+    width: 110,
     height: 110,
-    borderRadius: 18,
+    borderRadius: 55,
+    alignSelf: 'center',
     borderWidth: 1,
     borderColor: '#00000026',
   },
   arabic: { fontSize: 32, lineHeight: 54 },
-  pronunciation: { textAlign: 'center', fontSize: 16, color: '#52644D' },
+  speaker: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#D7DFCA',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  swatchSpeaker: { position: 'absolute', right: -8, bottom: -2 },
   label: {
     textAlign: 'center',
     fontSize: 17,

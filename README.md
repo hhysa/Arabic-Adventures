@@ -170,3 +170,25 @@ Manual smoke test before a release: open Baa and another letter, play both words
 - Commit `package-lock.json` when changing dependencies. Preserve compatible Expo package versions rather than independently upgrading React Native modules.
 
 There is no CI workflow configured in this repository. `npm run verify` is the local handoff gate and can be used by a future CI workflow without introducing a new test runner.
+
+### Color voice clips
+
+The Colors cards and practice prompts play bundled Arabic MP3 clips from
+`assets/audio/colors/`. Tap a color card or the speaker icon on its swatch to hear the word.
+These clips were generated with Google Translate's Arabic speech service;
+playback makes no request to that service. Color clips have their own directory
+so the orange color cannot overwrite the orange fruit recording.
+
+Run `npm run audio:sync` to update the color manifest and `src/color-audio.ts`.
+To generate missing color clips, run `python3 scripts/generate-color-audio.py`
+with network access. Existing clips are preserved; explicitly remove the affected
+clip before regenerating it after an Arabic spelling change.
+
+### Number voice clips
+
+Tap a number card or its speaker icon to hear its Arabic name. All 20 clips
+are bundled in `assets/audio/numbers/`, generated using the same Arabic speech
+service as the colors. Playback needs no speech service or installed device voice.
+Run `npm run audio:sync` to update the manifest and `src/number-audio.ts`, then
+`python3 scripts/generate-color-audio.py numbers` to generate missing recordings.
+Existing recordings are preserved; remove an affected clip explicitly to regenerate it.
